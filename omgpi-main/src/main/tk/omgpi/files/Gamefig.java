@@ -6,7 +6,7 @@ public class Gamefig extends OMGConfig {
     public Gamefig() {
         super(OMGPI.g.getDataFolder(), "game.omgc");
         setUnpresent("minPlayers", 2);
-        setUnpresent("waitTime", 600);
+        setUnpresent("waitTime", 60);
         setUnpresent("discoveryLength", 500);
         setUnpresent("gameLength", 1800);
         setUnpresent("gameShopSize", 54);
