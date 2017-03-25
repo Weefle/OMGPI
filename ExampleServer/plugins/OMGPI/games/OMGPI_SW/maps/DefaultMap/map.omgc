@@ -1,0 +1,14 @@
+players: 8
+description:
+- Default Description
+- Plugin and/or map by staff
+winMessage: '&3&l<---> %winner% &3&l<--->'
+spawns:
+- 0,101,30,180,0
+- 0,101,-30,0,0
+- 30,101,0,90,0
+- -30,101,0,-90,0
+- -17,101,22,-135,0
+- 17,101,-22,45,0
+- -22,101,-17,-45,0
+- 22,101,17,135,0

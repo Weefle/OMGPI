@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="OMGPI">
+    <output-path>$PROJECT_DIR$/out/artifacts/OMGPI</output-path>
+    <root id="archive" name="OMGPI.jar">
+      <element id="module-output" name="omgpi_main" />
+      <element id="module-output" name="omgpi" />
+    </root>
+  </artifact>
+</component>
