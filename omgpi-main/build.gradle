@@ -1,0 +1,25 @@
+group 'tk.omgpi'
+version '1.0a'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile files('D:/BuildTools 1.11/spigot-1.11.2.jar')
+}
