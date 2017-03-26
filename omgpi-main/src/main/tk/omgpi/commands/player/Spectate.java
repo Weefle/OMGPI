@@ -10,7 +10,7 @@ import tk.omgpi.game.OMGPlayer;
 
 public class Spectate extends OMGCommand {
     public Spectate() {
-        super("join", "omgpi.play", "play");
+        super("spectate", "omgpi.play", "spec");
     }
 
     public void call(CommandSender s, String label) {
