@@ -1,5 +1,8 @@
 package tk.omgpi.game;
 
+/**
+ * Game states
+ */
 public enum GameState {
     /**
      * Pre-game state.
@@ -22,8 +25,17 @@ public enum GameState {
      */
     SETUPMODE("Setup Mode");
 
+    /**
+     * The string used to show info in MOTD.
+     */
+    @Deprecated
     public String s;
 
+    /**
+     * Struct.
+     *
+     * @param s Display string
+     */
     GameState(String s) {
         this.s = s;
     }

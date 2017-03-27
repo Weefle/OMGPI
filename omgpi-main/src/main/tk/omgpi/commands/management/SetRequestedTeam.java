@@ -9,6 +9,9 @@ import tk.omgpi.game.GameState;
 import tk.omgpi.game.OMGPlayer;
 import tk.omgpi.game.OMGTeam;
 
+/**
+ * Select player's team.
+ */
 public class SetRequestedTeam extends OMGCommand {
     public SetRequestedTeam() {
         super("setrequestedteam", "omgpi.manage", "sreqteam", "teamrequestset");

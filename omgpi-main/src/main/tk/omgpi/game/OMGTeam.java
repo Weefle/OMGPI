@@ -127,7 +127,7 @@ public class OMGTeam extends Hashdatable {
     /**
      * Check if there are no players in the team.
      *
-     * @return Players amount <= 0.
+     * @return Players amount &lt;= 0.
      */
     public boolean isEmpty() {
         return size() <= 0;
@@ -155,7 +155,7 @@ public class OMGTeam extends Hashdatable {
     /**
      * Check if there are any other teams than Spectator and Default.
      *
-     * @return Teams size > 2.
+     * @return Teams size &gt; 2.
      */
     public static boolean anyElseRegistered() {
         return registeredTeams.size() > 2;
@@ -164,7 +164,7 @@ public class OMGTeam extends Hashdatable {
     /**
      * Check if there is at least one team that won or there are no teams that haven't lost.
      *
-     * @return Teams won > 0 or Non spec teams that did not lose < 1.
+     * @return Teams won &gt; 0 or Non spec teams that did not lose &lt; 1.
      */
     public static boolean somebodyWonOrEveryoneLost() {
         return getFiltered(t -> t.state == TeamState.WON).size() > 0 || getFiltered(t -> t != OMGPI.g.spectatorTeam && t.state != TeamState.LOST).size() < 1;

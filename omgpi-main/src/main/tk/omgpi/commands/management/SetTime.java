@@ -7,6 +7,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 
+/**
+ * Set time left till game end.
+ */
 public class SetTime extends OMGCommand {
     public SetTime() {
         super("settime", "omgpi.manage", "timeset", "tset", "sett");

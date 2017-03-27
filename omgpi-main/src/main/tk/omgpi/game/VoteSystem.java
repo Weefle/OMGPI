@@ -1,21 +1,27 @@
 package tk.omgpi.game;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import tk.omgpi.OMGPI;
 import tk.omgpi.files.OMGMap;
 import tk.omgpi.utils.OMGHashMap;
+import tk.omgpi.utils.OMGList;
 import tk.omgpi.utils.ObjectiveBuffer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Voting system. Usually has 5 maps.
  */
 public class VoteSystem {
-    public OMGHashMap<OMGMap, List<Player>> votes;
+    /**
+     * Player votes
+     */
+    public OMGHashMap<OMGMap, OMGList<OMGPlayer>> votes;
+
+    /**
+     * Voting players
+     */
     public boolean voting;
 
     /**
@@ -24,7 +30,7 @@ public class VoteSystem {
     public VoteSystem() {
         voting = false;
         votes = new OMGHashMap<>();
-        for (String s : OMGMap.getFiveMaps()) votes.put(new OMGMap(s), new LinkedList<>());
+        for (String s : OMGMap.getFiveMaps()) votes.put(new OMGMap(s), new OMGList<>());
         start();
         scoreboardVotes();
     }
@@ -69,21 +75,21 @@ public class VoteSystem {
      * @param map Name of voted map or its number.
      * @return True if vote is successful, else false.
      */
-    public boolean vote(Player p, String map) {
+    public boolean vote(OMGPlayer p, String map) {
         for (OMGMap m : new LinkedList<>(votes.keySet())) votes.get(m).remove(p);
         try {
             int i = Integer.parseInt(map) - 1;
-            List<OMGMap> ms = new LinkedList<>(votes.keySet());
+            OMGList<OMGMap> ms = new OMGList<>(votes.keySet());
             OMGMap m = ms.get(i);
-            List<Player> ll = votes.get(m);
+            OMGList<OMGPlayer> ll = votes.get(m);
             ll.add(p);
             votes.put(m, ll);
             scoreboardVotes();
             return true;
         } catch (Exception e) {
-            for (OMGMap m : new LinkedList<>(votes.keySet())) {
+            for (OMGMap m : new OMGList<>(votes.keySet())) {
                 if (m.name.equalsIgnoreCase(map)) {
-                    List<Player> ll = votes.get(m);
+                    OMGList<OMGPlayer> ll = votes.get(m);
                     ll.add(p);
                     votes.put(m, ll);
                     scoreboardVotes();

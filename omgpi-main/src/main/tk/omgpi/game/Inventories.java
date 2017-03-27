@@ -20,9 +20,21 @@ import java.util.List;
  * Class storing menus, ChatColors to wool ids.
  */
 public class Inventories {
+    /**
+     * Options menu
+     */
     public static Inventory options;
+    /**
+     * Team selection menu
+     */
     public static Inventory teams;
+    /**
+     * Kits selection menu
+     */
     public static Inventory kits;
+    /**
+     * Game shop menu
+     */
     public static Inventory gameShop;
     
     /**
@@ -149,7 +161,13 @@ public class Inventories {
         }
         throw new RuntimeException("New color?!");
     }
-    
+
+    /**
+     * Copy an inventory and open it for player
+     *
+     * @param i Inventory to open
+     * @param p Player that needs the inventory
+     */
     public static void openFakeInv(Inventory i, OMGPlayer p) {
         Inventory fake = Bukkit.createInventory(p.bukkit, i.getSize(), i.getTitle());
         for (int slot = 0; slot < i.getContents().length; slot++) {

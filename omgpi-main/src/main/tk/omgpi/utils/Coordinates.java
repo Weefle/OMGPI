@@ -1,14 +1,14 @@
 package tk.omgpi.utils;
 
+/**
+ * Coordinates parsing utils
+ */
 public class Coordinates {
     /**
      * Turn string like 0, 0, 0, ... into double array.
-     * POINT will just put x, y and z into an array,
-     * ROTATION does yaw and pitch (if present),
-     * AREA will sort out minimum and maximum points.
-     * AREA sort: [0-2] min point, [3-5] max point.
      *
      * @param s List of doubles.
+     * @param c Type of parsing to use.
      * @return Array of coordinates.
      */
     public static double[] parse(String s, CoordinateType c) {
@@ -30,8 +30,23 @@ public class Coordinates {
         }
         return ds;
     }
-    
+
+    /**
+     * Types of coordinate parsing
+     */
     public enum CoordinateType {
-        AREA, POINT, ROTATION
+        /**
+         * AREA will sort out minimum and maximum points.
+         * AREA sort: [0-2] min point, [3-5] max point.
+         */
+        AREA,
+        /**
+         * POINT will just put x, y and z into an array.
+         */
+        POINT,
+        /**
+         * ROTATION does yaw and pitch (if present).
+         */
+        ROTATION
     }
 }

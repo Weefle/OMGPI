@@ -24,24 +24,63 @@ import static org.bukkit.ChatColor.AQUA;
  * OMGPI Custom player.
  */
 public class OMGPlayer extends Hashdatable {
+    /**
+     * Registered players
+     */
     public static OMGHashMap<Player, OMGPlayer> link = new OMGHashMap<>();
+    /**
+     * Associated bukkit player
+     */
     public Player bukkit;
+    /**
+     * Currently selected kit
+     */
     public OMGKit kit;
+    /**
+     * Selected Hotbar Editor slot, -1 for none
+     */
     public int selectedHBESlot;
+    /**
+     * Amount of game coins that player has
+     */
     public int gameCoins;
+    /**
+     * Currently shown action bar
+     */
     public String actionbar;
+    /**
+     * Player's last damager
+     */
     public OMGPlayer lastDamager;
+    /**
+     * Player's team. If null can cause some issues
+     */
     public OMGTeam team;
+    /**
+     * Player's requested team
+     */
     public OMGTeam requestedTeam;
+    /**
+     * Custom checks if player is invulnerable (So there is no conflicts with other plugins)
+     */
     public boolean invulnerable;
+    /**
+     * Last projectile that hit the player
+     */
     public Projectile lastProjectileShotBy;
+    /**
+     * Objective used for sidebar display
+     */
     public Objective displayObjective;
+    /**
+     * Whether player has ever played the game or not (for safe checks of winner)
+     */
     public boolean played;
 
     /**
      * Get filtered list of registered players.
      *
-     * @param filter p -> boolean
+     * @param filter p -&gt; boolean
      * @return Filtered list.
      */
     public static OMGList<OMGPlayer> getFiltered(Predicate<OMGPlayer> filter) {
@@ -62,10 +101,11 @@ public class OMGPlayer extends Hashdatable {
     }
 
     /**
-     * Remove player from all teams and unlink bukkit player.
+     * Remove player from all teams, unvote and unlink bukkit player.
      */
     public void remove() {
         setTeam(null);
+        OMGPI.g.voteSystem.votes.keySet().forEach(m -> OMGPI.g.voteSystem.votes.get(m).remove(this));
         link.remove(bukkit);
     }
 
@@ -83,7 +123,7 @@ public class OMGPlayer extends Hashdatable {
                 if (vds != null) bukkit.setVelocity(new Vector(vds[0], vds[1], vds[2]));
                 double[] cds = a.teleport.get(team);
                 if (cds != null)
-                    bukkit.teleport(new Location(OMGPI.gameworld.bukkit(), cds[0], cds[1], cds[2], (float) (cds.length > 3 ? cds[3] : 0), (float) (cds.length > 3 ? cds[4] : 0)));
+                    bukkit.teleport(new Location(OMGPI.gameworld.bukkit, cds[0], cds[1], cds[2], (float) (cds.length > 3 ? cds[3] : 0), (float) (cds.length > 3 ? cds[4] : 0)));
                 a.effects.get(team).forEach(e -> bukkit.addPotionEffect(e, true));
             });
         } else if (requestedTeam != null) bukkit.setDisplayName(requestedTeam.prefix + bukkit.getName());
@@ -161,7 +201,7 @@ public class OMGPlayer extends Hashdatable {
      */
     public void selectWorld() {
         if (OMGPI.g.checkStates(GameState.INGAME, GameState.ENDING, GameState.DISCOVERY)) {
-            bukkit.teleport(OMGPI.gameworld.bukkit().getSpawnLocation());
+            bukkit.teleport(OMGPI.gameworld.bukkit.getSpawnLocation());
             reset();
             if (OMGPI.g.state == GameState.DISCOVERY) {
                 bukkit.setGameMode(GameMode.SPECTATOR);
@@ -263,6 +303,8 @@ public class OMGPlayer extends Hashdatable {
 
     /**
      * Add Game Coins to player and notify him about it.
+     *
+     * @param i Amount to add.
      */
     public void addGameCoins(int i) {
         if (i != 0) {
@@ -274,7 +316,7 @@ public class OMGPlayer extends Hashdatable {
     /**
      * Check if there is only one or less players that are not spectating.
      *
-     * @return Non spectator players amount < 2.
+     * @return Non spectator players amount &lt; 2.
      */
     public static boolean oneLeft() {
         return OMGPI.g.spectatorTeam.unpresent().size() < 2;
@@ -303,6 +345,7 @@ public class OMGPlayer extends Hashdatable {
      * Set requested kit.
      *
      * @param kit Kit name.
+     * @param latest Also set latest kit.
      */
     public void setKit(OMGKit kit, boolean latest) {
         this.kit = kit;

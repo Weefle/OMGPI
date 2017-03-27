@@ -8,12 +8,25 @@ import java.util.stream.*;
  * OMGStream is a stream that can be randomized and collected easily.
  */
 public class OMGStream<E> implements Stream<E> {
+    /**
+     * Associated stream
+     */
     public Stream<E> s;
 
+    /**
+     * Stream to create from collection
+     *
+     * @param c Collection to stream
+     */
     public OMGStream(Collection<E> c) {
         s = c.stream();
     }
 
+    /**
+     * Copy a stream with additional OMGStream utils
+     *
+     * @param c Stream to copy
+     */
     public OMGStream(Stream<E> c) {
         s = c;
     }

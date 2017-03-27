@@ -7,6 +7,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 
+/**
+ * Stop the game.
+ */
 public class StopGame extends OMGCommand {
     public StopGame() {
         super("stopgame", "omgpi.manage", "sg", "gamestop", "gs");

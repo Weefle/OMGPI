@@ -6,6 +6,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Open options menu.
+ */
 public class Options extends OMGCommand {
     public Options() {
         super("options", "omgpi.play");

@@ -17,6 +17,4 @@ OMGPI contains 5 parts: Game, Mainfig, Gamefig, Mapfig, Loots/Kits basic files.
 *   Mapfig (map.omgc) is map (+team) configuration.
 *   Loots/Kits files (.kit and .loot) in corresponding folders manage kits and loots default for all maps.
 
-The plugin is in earliest stage of development. 
-All bug reports and suggestions should be issued to dev branch, so I could decide that the bug is present in latest dev and master releases.
-If you notice some bug in master branch release, make sure the bug is major, else report to dev branch.
+The plugin is in earliest stage of development (Alpha).

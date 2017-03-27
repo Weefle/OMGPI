@@ -8,6 +8,9 @@ import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Join currently running game (if game allows that)
+ */
 public class Join extends OMGCommand {
     public Join() {
         super("join", "omgpi.play", "play");

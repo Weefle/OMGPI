@@ -36,6 +36,8 @@ public class OMGDamageEvent extends OMGEvent implements Cancellable {
 
     /**
      * Set damage in both OMG and Bukkit events.
+     *
+     * @param damage Damage to set
      */
     public void setDamage(float damage) {
         this.damage = damage;
@@ -44,7 +46,7 @@ public class OMGDamageEvent extends OMGEvent implements Cancellable {
 
     /**
      * Check if player becomes dead after event.
-     * Equivalent to damaged.bukkit.getHealth() - ((EntityDamageEvent) bukkit).getFinalDamage() <= 0 || cause == OMGDamageCause.VOID.
+     * Equivalent to damaged.bukkit.getHealth() - ((EntityDamageEvent) bukkit).getFinalDamage() &lt;= 0 || cause == OMGDamageCause.VOID.
      *
      * @return True if player is dead, false otherwise.
      */

@@ -8,12 +8,32 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * .loot file representation.
+ */
 public class OMGLoot extends OMGConfig {
+    /**
+     * Registered loots
+     */
     public static OMGList<OMGLoot> loots = new OMGList<>();
+    /**
+     * Loot folder (/plugins/OMGPI/games/GameName/loots/)
+     */
     public static File dir;
+    /**
+     * Loot name
+     */
     public String name;
+    /**
+     * Loot contents
+     */
     public LootParser contents;
 
+    /**
+     * Create a loot
+     *
+     * @param name Loot name
+     */
     public OMGLoot(String name) {
         super(dir, name + ".loot");
         this.name = name;
@@ -40,7 +60,7 @@ public class OMGLoot extends OMGConfig {
     }
 
     /**
-     * Turn a list of nbts into 2 lists for randomization.
+     * Turn a list of NBTs into 2 lists for randomization.
      */
     public static class LootParser {
         /**

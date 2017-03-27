@@ -2,7 +2,13 @@ package tk.omgpi.files;
 
 import tk.omgpi.OMGPI;
 
+/**
+ * main.omgc representation.
+ */
 public class Mainfig extends OMGConfig {
+    /**
+     * Struct.
+     */
     public Mainfig() {
         super(OMGPI.instance.getDataFolder(), "main.omgc");
         if (setUnpresent("selectedGame", "random"))

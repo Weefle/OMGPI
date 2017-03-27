@@ -7,15 +7,30 @@ import tk.omgpi.OMGPI;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Custom YAML config in .omgc format
+ */
 public class OMGConfig extends YamlConfiguration {
-    File omgc;
+    /**
+     * Config file
+     */
+    public File omgc;
 
+    /**
+     * Create custom OMGConfig
+     *
+     * @param folder Folder to put file into.
+     * @param name   File name. I'd suggest using .omgc on end.
+     */
     public OMGConfig(File folder, String name) {
         omgc = new File(folder, name);
         reload();
         save();
     }
 
+    /**
+     * Reload configuration
+     */
     public void reload() {
         try {
             load(omgc);
@@ -25,6 +40,9 @@ public class OMGConfig extends YamlConfiguration {
         }
     }
 
+    /**
+     * Save configuration
+     */
     public void save() {
         try {
             save(omgc);

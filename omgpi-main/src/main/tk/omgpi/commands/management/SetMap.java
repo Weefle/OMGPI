@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 
+/**
+ * Select a map and stop voting.
+ */
 public class SetMap extends OMGCommand {
     public SetMap() {
         super("setmap", "omgpi.manage", "smap", "map", "maps", "mapset");

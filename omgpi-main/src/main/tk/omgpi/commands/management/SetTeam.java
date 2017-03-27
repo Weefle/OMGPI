@@ -9,6 +9,9 @@ import tk.omgpi.game.GameState;
 import tk.omgpi.game.OMGPlayer;
 import tk.omgpi.game.OMGTeam;
 
+/**
+ * Set player's current team.
+ */
 public class SetTeam extends OMGCommand {
     public SetTeam() {
         super("setteam", "omgpi.manage", "steam", "teamset");

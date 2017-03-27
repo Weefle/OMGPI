@@ -7,6 +7,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Open game shop.
+ */
 public class GameShop extends OMGCommand {
     public GameShop() {
         super("gameshop", "omgpi.play", "shop");

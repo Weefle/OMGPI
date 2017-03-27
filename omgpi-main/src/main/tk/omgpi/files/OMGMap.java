@@ -15,17 +15,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * A map
+ */
 public class OMGMap {
+    /**
+     * Map name defined by folder name
+     */
     public String name;
+    /**
+     * Mapfig
+     */
     public Mapfig mapfig;
+    /**
+     * Map directory (/plugins/OMGPI/games/GameName/maps/MapName/)
+     */
     public File dir;
 
+    /**
+     * Create an OMGMap
+     *
+     * @param name Map name defined by folder name
+     */
     public OMGMap(String name) {
         this.name = name;
         dir = new File(OMGPI.g.getDataFolder() + File.separator + "maps" + File.separator + name);
         mapfig = new Mapfig(this);
     }
 
+    /**
+     * Load the map and setup mapfig
+     */
     public void load() {
         OMGPI.gameworld.unload();
         OMGTeam.registeredTeams.forEach(OMGTeam::setupMapfig);

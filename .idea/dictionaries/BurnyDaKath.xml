@@ -26,6 +26,7 @@
       <w>hotbareditor</w>
       <w>ingame</w>
       <w>kirill</w>
+      <w>lastdamagers</w>
       <w>levelup</w>
       <w>lowercased</w>
       <w>mainfig</w>
@@ -45,6 +46,7 @@
       <w>teleport</w>
       <w>unpresent</w>
       <w>unregister</w>
+      <w>unvote</w>
     </words>
   </dictionary>
 </component>
