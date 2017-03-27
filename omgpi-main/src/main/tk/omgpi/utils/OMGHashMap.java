@@ -108,6 +108,9 @@ public class OMGHashMap<K, V> {
 
     /**
      * Check if the key is in hashmap.
+     *
+     * @param key Key to check
+     * @return True if there is a key
      */
     public boolean containsKey(K key) {
         return link.containsKey(key);

@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Select a jar to run. No arguments or random set game to random.
+ */
 public class SetGame extends OMGCommand {
     public SetGame() {
         super("setgame", "omgpi.manage", "setg", "gset", "gameset");

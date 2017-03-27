@@ -30,6 +30,9 @@ import java.util.List;
 import static tk.omgpi.OMGPI.g;
 import static tk.omgpi.game.OMGPlayer.get;
 
+/**
+ * Bukkit event listener. Has no JavaDocs inside, but shows which events are handled
+ */
 public class BukkitEventHandler implements Listener {
     @EventHandler
     public void event(PlayerJoinEvent e) {
@@ -255,7 +258,7 @@ public class BukkitEventHandler implements Listener {
                 if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Hotbar"))
                     get((Player) e.getWhoClicked()).hotbarEdit();
                 if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Vote"))
-                    g.voteSystem.vote((Player) e.getWhoClicked(), e.getCurrentItem().getItemMeta().getDisplayName().replaceAll(ChatColor.WHITE + "Vote for ", ""));
+                    g.voteSystem.vote(get((Player) e.getWhoClicked()), e.getCurrentItem().getItemMeta().getDisplayName().replaceAll(ChatColor.WHITE + "Vote for ", ""));
                 e.setCancelled(true);
             } else if (e.getClickedInventory().getTitle().equals(Inventories.teams.getTitle())) {
                 OMGTeam.registeredTeams.stream().filter(t -> t.id.equals(NBTParser.getTagCompound(e.getCurrentItem()).getString("teamid"))).findFirst().ifPresent(t -> g.player_request_team(get((Player) e.getWhoClicked()), t));

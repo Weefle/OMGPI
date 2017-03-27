@@ -153,6 +153,7 @@ public class Area {
      * Check if there is material in allow break list.
      *
      * @param t FGAPI Team to check.
+     * @param m Material to check
      * @return Result boolean.
      */
     public boolean isBreakAllowed(OMGTeam t, Material m) {
@@ -163,6 +164,7 @@ public class Area {
      * Check if there is material in allow place list.
      *
      * @param t FGAPI Team to check.
+     * @param m Material to check
      * @return Result boolean.
      */
     public boolean isPlaceAllowed(OMGTeam t, Material m) {

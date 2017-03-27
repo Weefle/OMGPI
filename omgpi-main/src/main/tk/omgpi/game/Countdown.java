@@ -14,8 +14,14 @@ public class Countdown extends BukkitRunnable {
      * Ticks left before game starts.
      */
     public int time;
+    /**
+     * To check if countdown is running.
+     */
     public boolean isRunning;
 
+    /**
+     * Struct.
+     */
     public Countdown() {
         super();
         time = 0;
@@ -23,6 +29,9 @@ public class Countdown extends BukkitRunnable {
         OMGPI.g.countdown = this;
     }
 
+    /**
+     * A countdown tick.
+     */
     public void run() {
         if (OMGPI.g.state != GameState.PRELOBBY) {
             cancel();
@@ -67,7 +76,7 @@ public class Countdown extends BukkitRunnable {
     }
 
     /**
-     * Start counting. Do not use if some countdown is already working.
+     * Start counting. Do not use if some countdown is already working. Will register a new countdown.
      *
      * @param s Starting position of counter.
      */

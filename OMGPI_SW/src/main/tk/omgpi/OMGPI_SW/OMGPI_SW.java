@@ -32,7 +32,7 @@ public class OMGPI_SW extends Game {
 
     public Location player_spawnLocation(OMGPlayer p) {
         double[] coords = Coordinates.parse(loadedMap.mapfig.getStringList("spawns").get(++j), Coordinates.CoordinateType.ROTATION);
-        return new Location(OMGPI.gameworld.bukkit(), coords[0], coords[1], coords[2], (float) (coords.length > 3 ? coords[3] : 0), (float) (coords.length > 3 ? coords[4] : 0));
+        return new Location(OMGPI.gameworld.bukkit, coords[0], coords[1], coords[2], (float) (coords.length > 3 ? coords[3] : 0), (float) (coords.length > 3 ? coords[4] : 0));
     }
 
     public void event_preMapfigSave(Mapfig m) {

@@ -8,6 +8,9 @@ import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.OMGPlayer;
 import tk.omgpi.game.OMGTeam;
 
+/**
+ * Select a team.
+ */
 public class RequestTeam extends OMGCommand {
     public RequestTeam() {
         super("team", "omgpi.play", "requestteam", "rt", "teams");

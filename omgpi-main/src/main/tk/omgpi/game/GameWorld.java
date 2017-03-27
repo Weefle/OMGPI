@@ -6,9 +6,19 @@ import org.bukkit.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * gameworld folder.
+ */
 public class GameWorld {
-    private World bukkit;
-    private WorldCreator gen;
+    /**
+     * Changeable world instance.
+     */
+    public World bukkit;
+
+    /**
+     * Generator used to load this world.
+     */
+    public WorldCreator gen;
 
     /**
      * Struct.
@@ -49,15 +59,6 @@ public class GameWorld {
         bukkit.setGameRuleValue("doWeatherCycle", "false");
         bukkit.setGameRuleValue("showDeathMessages", "false");
         bukkit.setAutoSave(false);
-    }
-
-    /**
-     * Get changeable world instance.
-     *
-     * @return Bukkit world.
-     */
-    public World bukkit() {
-        return bukkit;
     }
 
     /**

@@ -118,6 +118,7 @@ public abstract class OMGDamageCause {
     /**
      * Use this to create custom damage causes.
      *
+     * @param name Name to access cause in config
      * @param e When no args are written, this counts as a CUSTOM bukkit damage cause.
      */
     public OMGDamageCause(String name, EntityDamageEvent.DamageCause... e) {
@@ -146,11 +147,21 @@ public abstract class OMGDamageCause {
 
     /**
      * Random Death Message by Last Damager.
+     *
+     * @param damaged Player that died
+     * @param s Message variants
+     * @return Damaged [random message]! (Last damaged by LastDamager)
      */
     public static String rDMBLD(OMGPlayer damaged, String... s) {
         return SPACING + damaged + SPACING + s[new Random().nextInt(s.length)] + SPACING + "!" + (damaged.lastDamager == null ? "" : " (Last damaged by " + damaged.lastDamager + SPACING + ")");
     }
 
+    /**
+     * Get a cause by name
+     *
+     * @param m Cause name
+     * @return A found cause or null
+     */
     public static OMGDamageCause valueOf(String m) {
         return values.omgstream().filter(dc -> dc.name.equalsIgnoreCase(m)).findFirst().orElse(null);
     }

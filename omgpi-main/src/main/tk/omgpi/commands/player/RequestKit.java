@@ -8,6 +8,9 @@ import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.files.OMGKit;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Select a kit.
+ */
 public class RequestKit extends OMGCommand {
     public RequestKit() {
         super("kit", "omgpi.play", "requestkit", "rk");
