@@ -4,7 +4,13 @@ import org.bukkit.ChatColor;
 import tk.omgpi.OMGPI;
 import tk.omgpi.utils.OMGList;
 
+/**
+ * map.omgc representation.
+ */
 public class Mapfig extends OMGConfig {
+    /**
+     * Associated map.
+     */
     public OMGMap m;
 
     public Mapfig(OMGMap m) {
@@ -20,10 +26,20 @@ public class Mapfig extends OMGConfig {
         save();
     }
 
+    /**
+     * Map description. Use for mapname, authors or something own
+     *
+     * @return description value
+     */
     public OMGList<String> description() {
         return new OMGList<>(getStringList("description"));
     }
 
+    /**
+     * Win message. %winner% will be replaced with winner.
+     *
+     * @return winMessage value
+     */
     public String winMessage() {
         return ChatColor.translateAlternateColorCodes('&', getString("winMessage"));
     }

@@ -6,9 +6,18 @@ import org.bukkit.event.block.BlockBreakEvent;
 import tk.omgpi.events.OMGEvent;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Used in event_player_break();
+ */
 public class OMGBreakEvent extends OMGEvent implements Cancellable {
     public boolean cancel;
+    /**
+     * Player that broke the block
+     */
     public OMGPlayer p;
+    /**
+     * Block that was broken
+     */
     public Block b;
 
     public OMGBreakEvent(BlockBreakEvent bukkit, OMGPlayer p, Block b) {

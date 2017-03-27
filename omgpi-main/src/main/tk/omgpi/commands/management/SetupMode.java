@@ -7,6 +7,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 
+/**
+ * Set game mode to setupmode, freezing all the timers.
+ */
 public class SetupMode extends OMGCommand {
     public SetupMode() {
         super("setupmode", "omgpi.manage", "sm");

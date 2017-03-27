@@ -7,6 +7,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Open Hotbar Editor.
+ */
 public class HotbarEditor extends OMGCommand {
     public HotbarEditor() {
         super("hotbareditor", "omgpi.play", "hbe", "hotbaredit");

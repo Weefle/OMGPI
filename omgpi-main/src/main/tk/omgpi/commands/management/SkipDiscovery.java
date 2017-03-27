@@ -6,6 +6,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 
+/**
+ * Skip discovery mode (time to discover the map) and start playing.
+ */
 public class SkipDiscovery extends OMGCommand {
     public SkipDiscovery() {
         super("skipdiscovery", "omgpi.manage", "sd", "skips");

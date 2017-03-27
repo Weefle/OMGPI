@@ -138,6 +138,8 @@ public class OMGPI extends JavaPlugin {
 
     /**
      * Log an info message.
+     *
+     * @param o Object to log using .toString()
      */
     public static void iLog(Object o) {
         logger.sendMessage(ChatColor.GREEN + "OMGPI > " + o);
@@ -145,6 +147,8 @@ public class OMGPI extends JavaPlugin {
 
     /**
      * Log a warning message.
+     *
+     * @param o Object to log using .toString()
      */
     public static void wLog(Object o) {
         logger.sendMessage(ChatColor.YELLOW + "OMGPI > " + o);
@@ -152,6 +156,8 @@ public class OMGPI extends JavaPlugin {
 
     /**
      * Log an error message.
+     *
+     * @param o Object to log using .toString()
      */
     public static void eLog(Object o) {
         logger.sendMessage(ChatColor.RED + "OMGPI > " + o);

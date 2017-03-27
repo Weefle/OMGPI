@@ -1,5 +1,5 @@
 group 'tk.omgpi'
-version '1.0a'
+version '1.1a'
 
 apply plugin: 'java'
 

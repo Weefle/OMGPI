@@ -8,6 +8,9 @@ import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Leave game and spectate instead.
+ */
 public class Spectate extends OMGCommand {
     public Spectate() {
         super("spectate", "omgpi.play", "spec");

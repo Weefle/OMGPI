@@ -2,6 +2,9 @@ package tk.omgpi.files;
 
 import tk.omgpi.OMGPI;
 
+/**
+ * game.omgc representation.
+ */
 public class Gamefig extends OMGConfig {
     public Gamefig() {
         super(OMGPI.g.getDataFolder(), "game.omgc");
@@ -15,10 +18,20 @@ public class Gamefig extends OMGConfig {
         save();
     }
 
+    /**
+     * Minimum players required to start countdown.
+     *
+     * @return minPlayers value
+     */
     public int getMinPlayers() {
         return Math.max(getInt("minPlayers"), 2);
     }
 
+    /**
+     * Countdown time
+     *
+     * @return waitTime value
+     */
     public int getWaitTime() {
         return getInt("waitTime");
     }

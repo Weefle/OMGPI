@@ -17,21 +17,21 @@ public class ClijmartTeamAsserter implements GamePreparer {
      */
     public int t;
     /**
-     * This stores teams with players < t.
+     * This stores teams with players &lt; t.
      */
     public OMGList<OMGTeam> smaller;
 
     public void player_start_discovery(OMGPlayer p) {
         p.play_sound_levelup();
         p.bukkit.setGameMode(GameMode.SPECTATOR);
-        p.bukkit.teleport(gameworld.bukkit().getSpawnLocation());
+        p.bukkit.teleport(gameworld.bukkit.getSpawnLocation());
     }
 
     public void player_start_nonDiscovery(OMGPlayer p) {
         p.play_sound_levelup();
         if (p.requestedTeam == g.spectatorTeam) {
             p.bukkit.setGameMode(GameMode.SPECTATOR);
-            p.bukkit.teleport(gameworld.bukkit().getSpawnLocation());
+            p.bukkit.teleport(gameworld.bukkit.getSpawnLocation());
         }
     }
 
@@ -82,6 +82,6 @@ public class ClijmartTeamAsserter implements GamePreparer {
             if (g.settings.allowGameShop) p.addGameCoins(5);
             p.bukkit.teleport(g.player_spawnLocation(p));
             p.played = true;
-        } else p.bukkit.teleport(OMGPI.gameworld.bukkit().getSpawnLocation().add(0.5, 0, 0.5));
+        } else p.bukkit.teleport(OMGPI.gameworld.bukkit.getSpawnLocation().add(0.5, 0, 0.5));
     }
 }

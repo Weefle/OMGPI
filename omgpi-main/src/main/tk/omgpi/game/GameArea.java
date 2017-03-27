@@ -13,6 +13,9 @@ import static tk.omgpi.utils.Coordinates.parse;
 public class GameArea {
     /**
      * Check if given block is inside game area.
+     *
+     * @param b Block to check
+     * @return True if the block is inside
      */
     public static boolean isBlockInside(Block b) {
         Location loc = b.getLocation();
@@ -22,6 +25,9 @@ public class GameArea {
 
     /**
      * Check if location is inside game area (Does not count height).
+     *
+     * @param loc Location to check
+     * @return True if the location is inside
      */
     public static boolean isInside(Location loc) {
         double[] cds = parse(mainfig.getString("area"), AREA);

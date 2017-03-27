@@ -7,6 +7,9 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.commands.OMGCommand;
 import tk.omgpi.game.GameState;
 
+/**
+ * Start the game.
+ */
 public class StartGame extends OMGCommand {
     public StartGame() {
         super("startgame", "omgpi.manage", "start", "st");

@@ -15,6 +15,9 @@ import java.util.Arrays;
  * Custom command class for easy command setup.
  */
 public class OMGCommand {
+    /**
+     * List of commands registered in OMGPI system
+     */
     public static OMGList<OMGCommand> registeredCommands = new OMGList<>();
 
     /**
@@ -121,6 +124,7 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 0 args version.
      *
+     * @param s Sender that executes the command
      * @param label Alias or name used to execute the command.
      */
     public void call(CommandSender s, String label) {
@@ -130,7 +134,9 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 1 arg version.
      *
+     * @param s Sender that executes the command
      * @param label Alias or name used to execute the command.
+     * @param arg1 First argument
      */
     public void call(CommandSender s, String label, String arg1) {
         call(s, label);
@@ -139,7 +145,10 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 2 args version.
      *
+     * @param s Sender that executes the command
      * @param label Alias or name used to execute the command.
+     * @param arg1 First argument
+     * @param arg2 Second argument
      */
     public void call(CommandSender s, String label, String arg1, String arg2) {
         call(s, label, arg1);
@@ -148,7 +157,11 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 3 args version.
      *
+     * @param s Sender that executes the command
      * @param label Alias or name used to execute the command.
+     * @param arg1 First argument
+     * @param arg2 Second argument
+     * @param arg3 Third argument
      */
     public void call(CommandSender s, String label, String arg1, String arg2, String arg3) {
         call(s, label, arg1, arg2);
@@ -157,7 +170,12 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 4 args version.
      *
+     * @param s Sender that executes the command
      * @param label Alias or name used to execute the command.
+     * @param arg1 First argument
+     * @param arg2 Second argument
+     * @param arg3 Third argument
+     * @param arg4 Fourth argument
      */
     public void call(CommandSender s, String label, String arg1, String arg2, String arg3, String arg4) {
         call(s, label, arg1, arg2, arg3);
@@ -166,7 +184,9 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is any amount of args version. Called along with others - use for complete overhaul.
      *
+     * @param s Sender that executes the command
      * @param label Alias or name used to execute the command.
+     * @param args All arguments used when executing
      */
     public void call(CommandSender s, String label, String... args) {
     }

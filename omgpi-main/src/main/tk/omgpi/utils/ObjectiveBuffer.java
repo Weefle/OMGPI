@@ -45,8 +45,10 @@ public class ObjectiveBuffer {
 
     /**
      * Get buffer containing all playing players.
+     *
+     * @return An ObjectiveBuffer.
      */
     public static ObjectiveBuffer createPlayerBuffer() {
-        return new ObjectiveBuffer(OMGPI.g.spectatorTeam.unpresent().omgstream().map(p -> ChatColor.GREEN + p.bukkit.getName()).collect(Collectors.toList()));
+        return new ObjectiveBuffer(OMGPI.g.spectatorTeam.unpresent().omgstream().map(p -> ChatColor.AQUA + p.bukkit.getName()).collect(Collectors.toList()));
     }
 }

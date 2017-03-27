@@ -10,6 +10,9 @@ import tk.omgpi.files.OMGKit;
 import tk.omgpi.game.GameState;
 import tk.omgpi.game.OMGPlayer;
 
+/**
+ * Select player's kit.
+ */
 public class SetKit extends OMGCommand {
     public SetKit() {
         super("setkit", "omgpi.manage", "skit", "skits", "skittles");

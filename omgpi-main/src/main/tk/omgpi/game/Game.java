@@ -209,6 +209,8 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Called before mapfig is saved.
      * Add your mapfig values here with setUnpresent().
+     *
+     * @param mapfig Mapfig that will be saved
      */
     public void event_preMapfigSave(Mapfig mapfig) {
     }
@@ -216,6 +218,8 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Called before gamefig is saved.
      * Add your gamefig values here with setUnpresent().
+     *
+     * @param gamefig Gamefig that will be saved
      */
     public void event_preGamefigSave(Gamefig gamefig) {
     }
@@ -321,6 +325,7 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Set loadedMap and stop vote system.
      *
+     * @param map Map name
      * @return True if success.
      */
     public boolean game_setMap(String map) {
@@ -341,6 +346,8 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Win message. Not important and can be replaced by any string in game_checkForEnd().
      * By default if there are any teams besides default and spectator, Team Wins are checked, else Player Teams.
+     *
+     * @return %winner%
      */
     public String game_winMessage() {
         if (OMGTeam.anyElseRegistered()) {
@@ -376,6 +383,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Called on player join.
+     *
+     * @param p Player that joined
      */
     public void event_player_join(OMGPlayer p) {
         p.requestedTeam = defaultTeam;
@@ -386,6 +395,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Called on player leave.
+     *
+     * @param p Player that left
      */
     public void event_player_leave(OMGPlayer p) {
         if (state == GameState.PRELOBBY) game_checkForStart();
@@ -397,18 +408,24 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Called after player has been asserted.
+     *
+     * @param p Player that was asserted by GamePreparer
      */
     public void event_player_assert(OMGPlayer p) {
     }
 
     /**
      * Called when player joins prelobby world.
+     *
+     * @param p Player that joined
      */
     public void event_player_joinPrelobby(OMGPlayer p) {
     }
 
     /**
      * Called when player gets damaged.
+     *
+     * @param e Associated OMGEvent
      */
     public void event_player_damage(OMGDamageEvent e) {
         if (e.damage > 0.1) e.damaged.play_particle_blood();
@@ -421,6 +438,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Called when damage event finds out that player is dead.
+     *
+     * @param e Associated OMGEvent
      */
     public void event_player_death(OMGDeathEvent e) {
         e.damaged.dropItems();
@@ -435,12 +454,16 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Called when player jumps.
+     *
+     * @param e Associated OMGEvent
      */
     public void event_player_jump(OMGJumpEvent e) {
     }
 
     /**
      * Called on team creation.
+     *
+     * @param team Created team
      */
     public void event_team_creation(OMGTeam team) {
     }
@@ -449,6 +472,8 @@ public class Game extends JavaPlugin implements Listener {
      * Add a player to your SQL table if you need to.
      * Use MySQL.add("UUID", p.bukkit.getUniqueId(), table) inside.
      * Table is usually game <i>name</i> variable.
+     *
+     * @param p Player to add
      */
     public void player_addToSQL(OMGPlayer p) {
     }
@@ -480,6 +505,9 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Set player's team independently from him.
+     *
+     * @param p Player to set team of
+     * @param t Team to set
      */
     public void player_set_team(OMGPlayer p, OMGTeam t) {
         p.fullReset();
@@ -490,6 +518,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Used when player asks to join the game.
+     *
+     * @param p Player that wants to join
      */
     public void player_request_join(OMGPlayer p) {
         if (p.team != spectatorTeam) {
@@ -505,6 +535,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Used when player asks to spectate the game.
+     *
+     * @param p Player to make spectator
      */
     public void player_request_spectate(OMGPlayer p) {
         if (p.team == spectatorTeam) {
@@ -520,6 +552,9 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Called when player selects a team.
+     *
+     * @param p Player to check
+     * @param t Team to request
      */
     public void player_request_team(OMGPlayer p, OMGTeam t) {
         p.requestedTeam = t;
@@ -528,7 +563,10 @@ public class Game extends JavaPlugin implements Listener {
     }
 
     /**
-     * Check if player has the kit.
+     * Called when player selects a kit.
+     *
+     * @param p Player to check
+     * @param kit Kit to request
      */
     public void player_request_kit(OMGPlayer p, OMGKit kit) {
         if (!settings.allowKits) {
@@ -545,6 +583,10 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Check if player has the kit.
+     *
+     * @param p Player to check
+     * @param k Kit to check
+     * @return True if player has kit
      */
     public boolean player_hasKit(OMGPlayer p, OMGKit k) {
         return settings.allowKits;
@@ -552,6 +594,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Give a kit to a player.
+     *
+     * @param p Player to give kit to
      */
     public void player_giveKit(OMGPlayer p) {
         p.bukkit.closeInventory();
@@ -569,12 +613,18 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Set the kit that player used last time.
+     *
+     * @param p Player to get kit from
+     * @param kit A latest OMGKit
      */
     public void player_set_latestKit(OMGPlayer p, OMGKit kit) {
     }
 
     /**
      * Kit that player used last time. Used for auto-setting kits on join.
+     *
+     * @param p Player to get kit from
+     * @return A latest OMGKit
      */
     public OMGKit player_latestKit(OMGPlayer p) {
         return OMGKit.kits.get(0);
@@ -583,6 +633,9 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Get string of hotbar items order from database.
      * It is recommended to use SQL instead of hashdata here.
+     *
+     * @param p Player to get hotbar order from
+     * @return A string with numbers 0-8 meaning slots
      */
     public String player_hotbarOrder(OMGPlayer p) {
         String s = (String) p.hashdata_get("DEFAULT_HBO");
@@ -593,6 +646,9 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Set string of hotbar items order in database.
      * It is recommended to use SQL instead of hashdata here.
+     *
+     * @param p Player to set hotbar order of
+     * @param s Hotbar order itself - example, "012345678"
      */
     public void player_set_hotbarOrder(OMGPlayer p, String s) {
         p.hashdata_set("DEFAULT_HBO", s);
@@ -600,6 +656,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Open game shop menu.
+     *
+     * @param p Player that need shop opened
      */
     public void player_openGameShop(OMGPlayer p) {
         if (state == GameState.INGAME && settings.allowGameShop) {
@@ -610,6 +668,9 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Give an item from shop to the player. You can get any value from nbt, even those set in the config.
+     *
+     * @param p Shop item to give to player
+     * @param nbt NBT to give (will have Cost tag)
      */
     public void player_giveShopItem(OMGPlayer p, NBTParser nbt) {
         int cost = nbt.c.getByte("Cost");
@@ -627,13 +688,19 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Location where player will spawn.
+     *
+     * @param p Player to get spawn of
+     * @return Spawn location
      */
     public Location player_spawnLocation(OMGPlayer p) {
-        return OMGPI.gameworld.bukkit().getSpawnLocation().add(0.5, 0, 0.5);
+        return OMGPI.gameworld.bukkit.getSpawnLocation().add(0.5, 0, 0.5);
     }
 
     /**
      * Get a compass location to track for the player.
+     *
+     * @param p Player to check
+     * @return Compass target location
      */
     public Location player_compassLocation(OMGPlayer p) {
         Optional<OMGPlayer> a = OMGPlayer.getFiltered(c -> c.team != spectatorTeam && c != p && (!OMGTeam.anyElseRegistered() || c.team != p.team)).stream().sorted(Comparator.comparingDouble(c -> c.bukkit.getLocation().distance(p.bukkit.getLocation()))).findFirst();
@@ -642,6 +709,9 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Get the place where the projectile first appeared (player hands or dispenser face).
+     *
+     * @param p Projectile to check
+     * @return Location of projectile source
      */
     public Location shootSource(Projectile p) {
         return shootSources.get(p);
@@ -649,6 +719,9 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Check if any of the states is equal to current one.
+     *
+     * @param states States to check
+     * @return any of the states is equal to current state
      */
     public boolean checkStates(GameState... states) {
         for (GameState state1 : states) {
@@ -752,6 +825,8 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Set team state to LOST and make all players in it spectators, not played and give loser rewards.
+     *
+     * @param t Teams that will lose
      */
     public void team_lose(OMGTeam... t) {
         for (OMGTeam t1 : t) {
@@ -766,6 +841,10 @@ public class Game extends JavaPlugin implements Listener {
 
     /**
      * Get player-specific kit contents.
+     *
+     * @param p Player that needs kit
+     * @param k Kit that has the contents
+     * @return Kit contents
      */
     public List<NBTParser> kit_contents(OMGPlayer p, OMGKit k) {
         return (loadedMap != null && loadedMap.mapfig.contains("teams." + p.team + ".kits." + k) ? loadedMap.mapfig.getStringList("teams." + p.team + ".kits." + k) : k.getStringList("contents")).stream().map(NBTParser::new).collect(Collectors.toList());
@@ -774,6 +853,10 @@ public class Game extends JavaPlugin implements Listener {
     /**
      * Get player-specific loot contents.
      * Warning: p may be null if the chest was not destroyed by player.
+     *
+     * @param p Player that needs loots
+     * @param l Loot ID
+     * @return Loot contents
      */
     public OMGLoot.LootParser loot_contents(OMGPlayer p, String l) {
         return loadedMap != null && loadedMap.mapfig.contains("loots." + l) ? new OMGLoot.LootParser(loadedMap.mapfig.getStringList("loots." + l)) : OMGLoot.nullFreeContents(l);

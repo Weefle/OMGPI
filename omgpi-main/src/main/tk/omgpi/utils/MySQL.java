@@ -98,6 +98,11 @@ public class MySQL {
         }
     }
 
+    /**
+     * Try and reconnect to the mysql server.
+     *
+     * @return True if success
+     */
     public static boolean reconnect() {
         try {
             if (!mysql.checkConnection()) {

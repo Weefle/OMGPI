@@ -7,9 +7,20 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Utils for parsing an item from NBT strings
+ */
 public class NBTParser {
+    /**
+     * Parsed tag
+     */
     public net.minecraft.server.v1_11_R1.NBTTagCompound c;
 
+    /**
+     * Parse a string
+     *
+     * @param s String to parse
+     */
     public NBTParser(String s) {
         this.c = parseCompound(s);
     }
