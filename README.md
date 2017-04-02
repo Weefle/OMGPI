@@ -8,7 +8,8 @@ It manages special game plugins and matches, teams, kits and many more.
 Games are really easy to create and manage, you can create fully-functional game in under half a hour (for game-special features, half an hour is estimate for developing games like Skywars), and OMGPI handles the rest.
 
 OMGPI must be run on BungeeCord network under own server, since it manages all players and plugins on the server.
-Also each OMGPI version can be only run under its spigot version, but you can update yourself by recompiling under newer NMS core.
+OMGPI now works under Reflection, which means there is no need to update sources to use OMGPI on older/newer versions.
+But this may break if there is a big change in NMS Core. So please keep your server and OMGPI up to date.
 
 OMGPI contains 5 parts: Game, Mainfig, Gamefig, Mapfig, Loots/Kits basic files.
 *   GameName.jar is your custom game - you manage the gameplay and events there.
