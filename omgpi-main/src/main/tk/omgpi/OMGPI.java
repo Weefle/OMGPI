@@ -1,11 +1,9 @@
 package tk.omgpi;
 
-import net.minecraft.server.v1_11_R1.ExceptionWorldConflict;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.libs.joptsimple.internal.Strings;
-import org.bukkit.craftbukkit.v1_11_R1.CraftServer;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
@@ -59,12 +57,6 @@ public class OMGPI extends JavaPlugin {
     public void onEnable() {
         instance = this;
         iLog("Setting up...");
-
-        ((CraftServer) getServer()).getServer().primaryThread.setUncaughtExceptionHandler((t, e) -> {
-            if (!(e instanceof ExceptionWorldConflict)) {
-                e.printStackTrace();
-            }
-        });
 
         gameworld = new GameWorld();
         mainfig = new Mainfig();

@@ -101,12 +101,12 @@ public abstract class OMGDamageCause {
             return rDMBLD(damaged, " was literally shocked", " caught a plasma bolt");
         }
     };
-    public static OMGDamageCause OVERCROWDED = new OMGDamageCause("overcrowded", EntityDamageEvent.DamageCause.CRAMMING) {
+    public static OMGDamageCause OVERCROWDED = new OMGDamageCause("overcrowded", EntityDamageEvent.DamageCause.valueOf("CRAMMING")) {
         public String getDeathMessage(OMGPlayer damaged) {
             return rDMBLD(damaged, " got crammed in the crowd", " got compressed");
         }
     };
-    public static OMGDamageCause MAGMA = new OMGDamageCause("magma", EntityDamageEvent.DamageCause.HOT_FLOOR) {
+    public static OMGDamageCause MAGMA = new OMGDamageCause("magma", EntityDamageEvent.DamageCause.valueOf("HOT_FLOOR")) {
         public String getDeathMessage(OMGPlayer damaged) {
             return rDMBLD(damaged, ", the floor is magma", " has melt to the floor");
         }

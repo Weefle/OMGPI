@@ -21,5 +21,6 @@ repositories {
 }
 
 dependencies {
-    compile files('D:/BuildTools 1.11/spigot-1.11.2.jar')
+    //compile files('D:/BuildTools 1.11/spigot-1.10.jar') //1.10
+    compile files('D:/BuildTools 1.11/spigot-1.11.jar') //1.11
 }
