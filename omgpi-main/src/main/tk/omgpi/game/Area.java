@@ -132,7 +132,7 @@ public class Area {
                 cancelDamage.put(t, OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".cancelDamage").stream().map(OMGDamageCause::valueOf).collect(Collectors.toList()));
             effects.put(t, !OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".effects") ? new ArrayList<>() : OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".effects").stream().map(m -> {
                 NBTParser nbt = new NBTParser(m);
-                return new PotionEffect(PotionEffectType.getByName(nbt.c.getString("id")), nbt.c.getInt("ticks"), nbt.c.getByte("level"), true, true);
+                return new PotionEffect(PotionEffectType.getByName(nbt.getString("id")), nbt.getInt("ticks"), nbt.getByte("level"), true, true);
             }).collect(Collectors.toList()));
         });
     }

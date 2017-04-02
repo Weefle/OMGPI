@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/OMGPI.iml" filepath="$PROJECT_DIR$/OMGPI.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OMGPI_SW.iml" filepath="$PROJECT_DIR$/.idea/modules/OMGPI_SW.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OMGPI_SW_main.iml" filepath="$PROJECT_DIR$/.idea/modules/OMGPI_SW_main.iml" group="OMGPI_SW" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OMGPI_SW_test.iml" filepath="$PROJECT_DIR$/.idea/modules/OMGPI_SW_test.iml" group="OMGPI_SW" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/omgpi.iml" filepath="$PROJECT_DIR$/.idea/modules/omgpi.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/omgpi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/omgpi_main.iml" group="omgpi" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/omgpi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/omgpi_test.iml" group="omgpi" />

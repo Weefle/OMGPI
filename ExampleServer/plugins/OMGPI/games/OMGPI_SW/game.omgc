@@ -1,7 +1,0 @@
-minPlayers: 2
-waitTime: 30
-discoveryLength: 500
-gameLength: 1800
-gameShopSize: 54
-gameShop:
-- '{id:stone,Count:1,Cost:10,tag:{display:{Lore:["�aPrice: 10"]}}}'

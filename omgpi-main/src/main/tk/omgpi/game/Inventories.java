@@ -1,6 +1,5 @@
 package tk.omgpi.game;
 
-import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -91,9 +90,7 @@ public class Inventories {
         
         OMGKit.kits.forEach(kit -> {
             NBTParser nbt = new NBTParser(kit.getString("displayItem"));
-            NBTTagCompound nn = nbt.c.getCompound("tag");
-            nn.setString("kitid", kit.getName());
-            nbt.c.set("tag", nn);
+            nbt.setString("tag.kitid", kit.getName());
             kits.addItem(nbt.toItem());
         });
 
@@ -177,7 +174,7 @@ public class Inventories {
                 ItemMeta im = e.getItemMeta();
                 im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                 im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                if ((NBTParser.getTagCompound(e).hasKey("kitid") && NBTParser.getTagCompound(e).getString("kitid").equals(p.kit.getName())) || (NBTParser.getTagCompound(e).hasKey("teamid") && NBTParser.getTagCompound(e).getString("teamid").equals(p.requestedTeam.id)))
+                if ((NBTParser.getTagCompound(e).getString("kitid") != null && NBTParser.getTagCompound(e).getString("kitid").equals(p.kit.getName())) || (NBTParser.getTagCompound(e).getString("teamid") != null && NBTParser.getTagCompound(e).getString("teamid").equals(p.requestedTeam.id)))
                     im.addEnchant(Enchantment.DURABILITY, 1, true);
                 e.setItemMeta(im);
                 fake.setItem(slot, e);

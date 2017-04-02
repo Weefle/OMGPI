@@ -3,13 +3,16 @@ package tk.omgpi.commands;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_11_R1.CraftServer;
 import tk.omgpi.commands.management.*;
 import tk.omgpi.commands.player.*;
 import tk.omgpi.utils.OMGList;
+import tk.omgpi.utils.ReflectionUtils;
 
 import java.util.Arrays;
+
+import static tk.omgpi.utils.ReflectionUtils.cbclasses;
 
 /**
  * Custom command class for easy command setup.
@@ -87,9 +90,9 @@ public class OMGCommand {
     /**
      * Create and register a new command.
      *
-     * @param name Command name used by default in /&lt;name&gt;.
+     * @param name       Command name used by default in /&lt;name&gt;.
      * @param permission Permission needed to execute the command.
-     * @param aliases Aliases which can be used to execute the command like /&lt;alias&gt;.
+     * @param aliases    Aliases which can be used to execute the command like /&lt;alias&gt;.
      */
     public OMGCommand(String name, String permission, String... aliases) {
         this.name = name;
@@ -111,20 +114,28 @@ public class OMGCommand {
                 return true;
             }
         };
-        ((CraftServer) Bukkit.getServer()).getCommandMap().register("omgpi", bukkit);
+        try {
+            ((CommandMap) ReflectionUtils.getClazz(cbclasses, "CraftServer").getDeclaredMethod("getCommandMap").invoke(Bukkit.getServer())).register("omgpi", bukkit);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Unregister the command from bukkit.
      */
     public void unregister() {
-        bukkit.unregister(((CraftServer) Bukkit.getServer()).getCommandMap());
+        try {
+            bukkit.unregister((CommandMap) ReflectionUtils.getClazz(cbclasses, "CraftServer").getDeclaredMethod("getCommandMap").invoke(Bukkit.getServer()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Called when command is executed. This is 0 args version.
      *
-     * @param s Sender that executes the command
+     * @param s     Sender that executes the command
      * @param label Alias or name used to execute the command.
      */
     public void call(CommandSender s, String label) {
@@ -134,9 +145,9 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 1 arg version.
      *
-     * @param s Sender that executes the command
+     * @param s     Sender that executes the command
      * @param label Alias or name used to execute the command.
-     * @param arg1 First argument
+     * @param arg1  First argument
      */
     public void call(CommandSender s, String label, String arg1) {
         call(s, label);
@@ -145,10 +156,10 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 2 args version.
      *
-     * @param s Sender that executes the command
+     * @param s     Sender that executes the command
      * @param label Alias or name used to execute the command.
-     * @param arg1 First argument
-     * @param arg2 Second argument
+     * @param arg1  First argument
+     * @param arg2  Second argument
      */
     public void call(CommandSender s, String label, String arg1, String arg2) {
         call(s, label, arg1);
@@ -157,11 +168,11 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 3 args version.
      *
-     * @param s Sender that executes the command
+     * @param s     Sender that executes the command
      * @param label Alias or name used to execute the command.
-     * @param arg1 First argument
-     * @param arg2 Second argument
-     * @param arg3 Third argument
+     * @param arg1  First argument
+     * @param arg2  Second argument
+     * @param arg3  Third argument
      */
     public void call(CommandSender s, String label, String arg1, String arg2, String arg3) {
         call(s, label, arg1, arg2);
@@ -170,12 +181,12 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is 4 args version.
      *
-     * @param s Sender that executes the command
+     * @param s     Sender that executes the command
      * @param label Alias or name used to execute the command.
-     * @param arg1 First argument
-     * @param arg2 Second argument
-     * @param arg3 Third argument
-     * @param arg4 Fourth argument
+     * @param arg1  First argument
+     * @param arg2  Second argument
+     * @param arg3  Third argument
+     * @param arg4  Fourth argument
      */
     public void call(CommandSender s, String label, String arg1, String arg2, String arg3, String arg4) {
         call(s, label, arg1, arg2, arg3);
@@ -184,9 +195,9 @@ public class OMGCommand {
     /**
      * Called when command is executed. This is any amount of args version. Called along with others - use for complete overhaul.
      *
-     * @param s Sender that executes the command
+     * @param s     Sender that executes the command
      * @param label Alias or name used to execute the command.
-     * @param args All arguments used when executing
+     * @param args  All arguments used when executing
      */
     public void call(CommandSender s, String label, String... args) {
     }

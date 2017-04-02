@@ -21,6 +21,6 @@ repositories {
 }
 
 dependencies {
-    compile files('D:/BuildTools 1.11/spigot-1.11.2.jar')
+    compile files('D:/FloatingWorld Reloaded/Test Hub/spigot.jar') //1.9
     compile files('D:/IdeaProjects/OMGPI/omgpi-main/')
 }

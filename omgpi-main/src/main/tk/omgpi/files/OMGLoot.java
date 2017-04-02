@@ -81,12 +81,9 @@ public class OMGLoot extends OMGConfig {
             contents = new LinkedList<>();
             probabilities = new LinkedList<>();
             nbts.forEach(mat -> contents.add(new NBTParser(mat)));
-            contents.add(new NBTParser("{id:air,Probability:" + contents.size() * 50 + "}"));
-            for (int j = 0; j < contents.size(); j++) {
-                for (int i = 0; i < contents.get(j).c.getInt("Probability"); i++) {
-                    probabilities.add(j);
-                }
-            }
+            contents.add(new NBTParser("{Probability:" + contents.size() * 50 + "}"));
+            for (int j = 0; j < contents.size(); j++)
+                for (int i = 0; i < contents.get(j).getInt("Probability"); i++) probabilities.add(j);
         }
 
         /**

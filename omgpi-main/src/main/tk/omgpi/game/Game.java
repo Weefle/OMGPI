@@ -601,7 +601,7 @@ public class Game extends JavaPlugin implements Listener {
         p.bukkit.closeInventory();
         p.bukkit.getInventory().clear();
         kit_contents(p, p.kit).forEach(nbt -> {
-            int slot = nbt.c.getByte("Slot");
+            int slot = nbt.getByte("Slot");
             if (slot < 9) slot = player_hotbarOrder(p).indexOf(slot + "");
             if (slot == 103) p.bukkit.getInventory().setHelmet(nbt.toItem());
             else if (slot == 102) p.bukkit.getInventory().setChestplate(nbt.toItem());
@@ -673,7 +673,7 @@ public class Game extends JavaPlugin implements Listener {
      * @param nbt NBT to give (will have Cost tag)
      */
     public void player_giveShopItem(OMGPlayer p, NBTParser nbt) {
-        int cost = nbt.c.getByte("Cost");
+        int cost = nbt.getInt("Cost");
         if (cost <= p.gameCoins) {
             p.addGameCoins(-cost);
             if (p.bukkit.getInventory().firstEmpty() == -1)

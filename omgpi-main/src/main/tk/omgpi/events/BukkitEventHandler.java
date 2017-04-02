@@ -24,11 +24,14 @@ import tk.omgpi.files.OMGKit;
 import tk.omgpi.files.OMGLoot;
 import tk.omgpi.game.*;
 import tk.omgpi.utils.NBTParser;
+import tk.omgpi.utils.ReflectionUtils;
 
 import java.util.List;
 
 import static tk.omgpi.OMGPI.g;
 import static tk.omgpi.game.OMGPlayer.get;
+import static tk.omgpi.utils.ReflectionUtils.cbclasses;
+import static tk.omgpi.utils.ReflectionUtils.nmsclasses;
 
 /**
  * Bukkit event listener. Has no JavaDocs inside, but shows which events are handled
@@ -235,7 +238,23 @@ public class BukkitEventHandler implements Listener {
                     e.getInventory().setItem(i, lp.getRandom().toItem());
                 e.getPlayer().closeInventory();
                 Chest c = (Chest) e.getInventory().getHolder();
-                c.setCustomName(null);
+                //Reset custom name
+                if (ReflectionUtils.intVer() < 11) {
+                    try {
+                        Class craftBlockState = ReflectionUtils.getClazz(cbclasses, "CraftBlockState");
+                        Class tileEntityChest = ReflectionUtils.getClazz(nmsclasses, "TileEntityChest");
+                        tileEntityChest.getDeclaredMethod("a", String.class).invoke(craftBlockState.getDeclaredMethod("getTileEntity").invoke(c), (String) null);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Class craftLootable = ReflectionUtils.getClazz(cbclasses, "CraftLootable");
+                        craftLootable.getDeclaredMethod("setCustomName", String.class).invoke(c, (String) null);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 c.update();
                 e.getPlayer().openInventory(c.getBlockInventory());
             }
@@ -289,7 +308,7 @@ public class BukkitEventHandler implements Listener {
                 List<String> nbts = g.gamefig.getStringList("gameShop");
                 if (e.getSlot() < nbts.size()) {
                     NBTParser nbt = new NBTParser(nbts.get(e.getSlot()));
-                    if (!nbt.c.getString("id").toLowerCase().contains("air"))
+                    if (!nbt.getString("id").toLowerCase().contains("air"))
                         g.player_giveShopItem(get((Player) e.getWhoClicked()), nbt);
                 }
                 e.setCancelled(true);

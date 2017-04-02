@@ -1,8 +1,6 @@
 package tk.omgpi.game;
 
-import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.Inventory;
@@ -15,7 +13,11 @@ import tk.omgpi.files.OMGKit;
 import tk.omgpi.utils.NBTParser;
 import tk.omgpi.utils.OMGHashMap;
 import tk.omgpi.utils.OMGList;
+import tk.omgpi.utils.ReflectionUtils;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.function.Predicate;
 
 import static org.bukkit.ChatColor.AQUA;
@@ -112,6 +114,7 @@ public class OMGPlayer extends Hashdatable {
     /**
      * Update issued on every tick of game module.
      */
+    @SuppressWarnings("all")
     public void update() {
         if (invulnerable) bukkit.setFireTicks(0);
         if (OMGPI.g.checkStates(GameState.DISCOVERY, GameState.INGAME, GameState.ENDING) && team != null) {
@@ -127,7 +130,20 @@ public class OMGPlayer extends Hashdatable {
                 a.effects.get(team).forEach(e -> bukkit.addPotionEffect(e, true));
             });
         } else if (requestedTeam != null) bukkit.setDisplayName(requestedTeam.prefix + bukkit.getName());
-        ((CraftPlayer) bukkit).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.GOLD + (actionbar == null ? "" : actionbar.replaceAll("\"", "\\\\\"")) + "\"}"), (byte) 2));
+        Class craftPlayer = ReflectionUtils.getClazz(ReflectionUtils.cbclasses, "CraftPlayer");
+        Class entityPlayer = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "EntityPlayer");
+        Class playerConnection = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PlayerConnection");
+        Class packet = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PacketPlayOutChat");
+        Class iChatBaseComponent = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "IChatBaseComponent");
+        Class chatSerializer = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "IChatBaseComponent$ChatSerializer");
+        try {
+            Object nmsPlayer = craftPlayer.getDeclaredMethod("getHandle").invoke(craftPlayer.cast(bukkit));
+            Object conn = entityPlayer.getDeclaredField("playerConnection").get(nmsPlayer);
+            Method sendPacket = playerConnection.getDeclaredMethod("sendPacket", ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "Packet"));
+            sendPacket.invoke(conn, packet.getConstructor(iChatBaseComponent, byte.class).newInstance(chatSerializer.getDeclaredMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.GOLD + (actionbar == null ? "" : actionbar.replaceAll("\"", "\\\\\"")) + "\"}"), (byte) 2));
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException | InstantiationException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -161,11 +177,21 @@ public class OMGPlayer extends Hashdatable {
     /**
      * Reset any player stats and such.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     public void reset() {
-        ((CraftPlayer) bukkit).getHandle().abilities = new PlayerAbilities();
-        ((CraftPlayer) bukkit).getHandle().updateAbilities();
-        for (int flag = 0; flag < 7; flag++) ((CraftPlayer) bukkit).getHandle().setFlag(flag, false);
+        Class craftPlayer = ReflectionUtils.getClazz(ReflectionUtils.cbclasses, "CraftPlayer");
+        Class entityHuman = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "EntityHuman");
+        Class entity = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "Entity");
+        Class playerAbilities = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PlayerAbilities");
+        try {
+            Object nmsPlayer = craftPlayer.getDeclaredMethod("getHandle").invoke(bukkit);
+            entityHuman.getDeclaredField("abilities").set(nmsPlayer, playerAbilities.getConstructor().newInstance());
+            entityHuman.getDeclaredMethod("updateAbilities").invoke(nmsPlayer);
+            for (int flag = 0; flag < 7; flag++)
+                entity.getDeclaredMethod("setFlag", int.class, boolean.class).invoke(nmsPlayer, flag, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         bukkit.setExp(0);
         bukkit.setLevel(0);
         bukkit.setMaxHealth(20);
@@ -227,9 +253,22 @@ public class OMGPlayer extends Hashdatable {
     /**
      * Play effect of player getting damaged for all players.
      */
-    public void play_damageEffect() {
-        for (Player p1 : Bukkit.getOnlinePlayers())
-            ((CraftPlayer) p1).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityStatus(((CraftPlayer) bukkit).getHandle(), (byte) 2));
+    @SuppressWarnings("all")
+    public void play_damageEffect() throws NoSuchMethodException {
+        Class craftPlayer = ReflectionUtils.getClazz(ReflectionUtils.cbclasses, "CraftPlayer");
+        Class entityPlayer = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "EntityPlayer");
+        Class playerConnection = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PlayerConnection");
+        Class packet = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PacketPlayOutEntityStatus");
+        for (Player p1 : Bukkit.getOnlinePlayers()) {
+            try {
+                Object nmsPlayer = craftPlayer.getDeclaredMethod("getHandle").invoke(craftPlayer.cast(p1));
+                Object conn = entityPlayer.getDeclaredField("playerConnection").get(nmsPlayer);
+                Method sendPacket = playerConnection.getDeclaredMethod("sendPacket", ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "Packet"));
+                sendPacket.invoke(conn, packet.getConstructor(entityPlayer, byte.class).newInstance(craftPlayer.getDeclaredMethod("getHandle").invoke(craftPlayer.cast(bukkit)), (byte) 2));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -332,19 +371,34 @@ public class OMGPlayer extends Hashdatable {
      * @param subtitle Text to appear on screen as a subtitle under title. May be null.
      * @param color    Mojang color for text. Will be lowercased.
      */
+    @SuppressWarnings("all")
     public void sendTitle(int fadein, int stay, int fadeout, String title, String subtitle, String color) {
-        PlayerConnection c = ((CraftPlayer) bukkit).getHandle().playerConnection;
-        c.sendPacket(new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TIMES, null, fadein, stay, fadeout));
-        if (subtitle != null)
-            c.sendPacket(new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + subtitle + "\", \"color\": \"" + color.toLowerCase() + "\"}")));
-        if (title != null)
-            c.sendPacket(new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + title + "\", \"color\": \"" + color.toLowerCase() + "\"}")));
+        Class craftPlayer = ReflectionUtils.getClazz(ReflectionUtils.cbclasses, "CraftPlayer");
+        Class entityPlayer = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "EntityPlayer");
+        Class playerConnection = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PlayerConnection");
+        Class packet = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PacketPlayOutTitle");
+        Class iChatBaseComponent = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "IChatBaseComponent");
+        Class enumTitleAction = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PacketPlayOutTitle$EnumTitleAction");
+        Class chatSerializer = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "IChatBaseComponent$ChatSerializer");
+        try {
+            Object nmsPlayer = craftPlayer.getDeclaredMethod("getHandle").invoke(craftPlayer.cast(bukkit));
+            Object conn = entityPlayer.getDeclaredField("playerConnection").get(nmsPlayer);
+            Method sendPacket = playerConnection.getDeclaredMethod("sendPacket", ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "Packet"));
+            sendPacket.invoke(conn, packet.getConstructor(enumTitleAction, iChatBaseComponent, int.class, int.class, int.class).newInstance(enumTitleAction.getField("TIMES").get(null), null, fadein, stay, fadeout));
+            Constructor struct = packet.getConstructor(enumTitleAction, iChatBaseComponent);
+            if (subtitle != null)
+                sendPacket.invoke(conn, struct.newInstance(enumTitleAction.getField("SUBTITLE").get(null), chatSerializer.getDeclaredMethod("a", String.class).invoke(null, "{\"text\": \"" + subtitle + "\", \"color\": \"" + color.toLowerCase() + "\"}")));
+            if (title != null)
+                sendPacket.invoke(conn, struct.newInstance(enumTitleAction.getField("TITLE").get(null), chatSerializer.getDeclaredMethod("a", String.class).invoke(null, "{\"text\": \"" + title + "\", \"color\": \"" + color.toLowerCase() + "\"}")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Set requested kit.
      *
-     * @param kit Kit name.
+     * @param kit    Kit name.
      * @param latest Also set latest kit.
      */
     public void setKit(OMGKit kit, boolean latest) {
@@ -361,12 +415,8 @@ public class OMGPlayer extends Hashdatable {
         String order = OMGPI.g.player_hotbarOrder(this);
         for (int c = 0; c < order.length(); c++) {
             int i = Integer.parseInt(order.charAt(c) + "");
-            NBTParser clickable = OMGPI.g.kit_contents(this, kit).stream().filter(nbt -> nbt.c.getInt("Slot") == i).findFirst().orElse(new NBTParser("{id:barrier,Count:1,Slot:" + i + "}"));
-            NBTTagCompound tag = clickable.c.getCompound("tag");
-            NBTTagCompound display = tag.getCompound("display");
-            display.setString("Name", i + 1 + "");
-            tag.set("display", display);
-            clickable.c.set("tag", tag);
+            NBTParser clickable = OMGPI.g.kit_contents(this, kit).stream().filter(nbt -> nbt.getInt("Slot") == i).findFirst().orElse(new NBTParser("{id:barrier,Count:1,Slot:" + i + "}"));
+            clickable.setString("tag.display.Name", i + 1 + "");
             hbe.setItem(c, clickable.toItem());
         }
         bukkit.openInventory(hbe);
