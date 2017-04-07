@@ -9,13 +9,6 @@ Games are really easy to create and manage, you can create fully-functional game
 
 OMGPI must be run on BungeeCord network under own server, since it manages all players and plugins on the server.
 OMGPI now works under Reflection, which means there is no need to update sources to use OMGPI on older/newer versions.
-But this may break if there is a big change in NMS Core. So please keep your server and OMGPI up to date.
-
-OMGPI contains 5 parts: Game, Mainfig, Gamefig, Mapfig, Loots/Kits basic files.
-*   GameName.jar is your custom game - you manage the gameplay and events there.
-*   Mainfig (main.omgc) is the main configuration for the plugin.
-*   Gamefig (game.omgc) is game configuration for your plugin.
-*   Mapfig (map.omgc) is map (+team) configuration.
-*   Loots/Kits files (.kit and .loot) in corresponding folders manage kits and loots default for all maps.
+But this may break if there is a big change in NMS Core, so please keep your server and OMGPI up to date.
 
 The plugin is in earliest stage of development (Alpha).
