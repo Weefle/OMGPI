@@ -3,7 +3,7 @@ Open Minecraft Game Programming Interface - Easy and quick way to create custom 
 
 For more info look on [our website](http://omgpi.tk/)!
 
-OMGPI is an open-source spigot plugin by Kirill Semyonkin aka BurnyDaKath based on FishGameAPI from ClijCraft Network. 
+OMGPI is an open-source spigot plugin by Kirill Semyonkin aka BurnyDaKath based on DNGPI from [Diversion Network](http://diversionmc.net/). 
 It manages special game plugins and matches, teams, kits and many more. 
 Games are really easy to create and manage, you can create fully-functional game in under half a hour (for game-special features, half an hour is estimate for developing games like Skywars), and OMGPI handles the rest.
 
