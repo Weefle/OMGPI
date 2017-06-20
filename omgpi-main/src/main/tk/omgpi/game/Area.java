@@ -10,8 +10,7 @@ import tk.omgpi.utils.NBTParser;
 import tk.omgpi.utils.OMGHashMap;
 import tk.omgpi.utils.OMGList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static tk.omgpi.utils.Coordinates.CoordinateType.*;
@@ -42,9 +41,9 @@ public class Area {
     public boolean allowFlow;
 
     /**
-     * Allow explosion damage.
+     * Allow explosion damage of specified blocks.
      */
-    public boolean allowExplosionDamage;
+    public Set<Material> canExplode;
 
     /**
      * For player of a team which is in the list: Right click blocks in area to open game shop.
@@ -54,12 +53,12 @@ public class Area {
     /**
      * Allow team to break blocks.
      */
-    public OMGHashMap<OMGTeam, List<Material>> canBreak;
+    public OMGHashMap<OMGTeam, Set<Material>> canBreak;
 
     /**
      * Allow team to place blocks.
      */
-    public OMGHashMap<OMGTeam, List<Material>> canPlace;
+    public OMGHashMap<OMGTeam, Set<Material>> canPlace;
 
     /**
      * Teleport team members when they enter the area.
@@ -74,7 +73,7 @@ public class Area {
     /**
      * Cancel damage causes.
      */
-    public OMGHashMap<OMGTeam, List<OMGDamageCause>> cancelDamage;
+    public OMGHashMap<OMGTeam, Set<OMGDamageCause>> cancelDamage;
 
     /**
      * Give potion effects to the players in the area.
@@ -110,7 +109,13 @@ public class Area {
         coords = parse(OMGPI.g.loadedMap.mapfig.getString("areas." + id + ".coords", "0,0,0"), AREA);
         allowBurn = OMGPI.g.loadedMap.mapfig.getBoolean("areas." + id + ".allowBurn", false);
         allowFlow = OMGPI.g.loadedMap.mapfig.getBoolean("areas." + id + ".allowFlow", false);
-        allowExplosionDamage = OMGPI.g.loadedMap.mapfig.getBoolean("areas." + id + ".allowExplosionDamage", false);
+        canExplode = new HashSet<>();
+        if (OMGPI.g.loadedMap.mapfig.contains("areas." + id + ".canExplode"))
+            OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + ".canExplode").forEach(cb -> {
+                if (cb.equals("*")) canExplode.addAll(Arrays.asList(Material.values()));
+                else if (cb.startsWith("-")) canExplode.remove(Material.matchMaterial(cb.substring(1)));
+                else canExplode.add(Material.matchMaterial(cb));
+            });
         OMGTeam.registeredTeams.forEach(t -> {
             String loc = OMGPI.g.loadedMap.mapfig.getString("areas." + id + "." + t + ".teleport");
             if (loc != null) teleport.put(t, parse(loc, ROTATION));
@@ -118,18 +123,31 @@ public class Area {
             if (vec != null) velocity.put(t, parse(vec, POINT));
             if (OMGPI.g.loadedMap.mapfig.getBoolean("areas." + id + "." + t + ".gameShop", false))
                 gameShop.add(t);
-            if (!OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".canBreak"))
-                canBreak.put(t, new ArrayList<>());
-            else if (!OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canBreak").contains("*"))
-                canBreak.put(t, OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canBreak").stream().map(Material::matchMaterial).collect(Collectors.toList()));
-            if (!OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".canPlace"))
-                canPlace.put(t, new ArrayList<>());
-            else if (!OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canPlace").contains("*"))
-                canPlace.put(t, OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canPlace").stream().map(Material::matchMaterial).collect(Collectors.toList()));
-            if (!OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".cancelDamage"))
-                cancelDamage.put(t, new ArrayList<>());
-            else if (!OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".cancelDamage").contains("*"))
-                cancelDamage.put(t, OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".cancelDamage").stream().map(OMGDamageCause::valueOf).collect(Collectors.toList()));
+            Set<Material> canbreak = new HashSet<>();
+            if (OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".canbreak"))
+                OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canbreak").forEach(cb -> {
+                    if (cb.equals("*")) canbreak.addAll(Arrays.asList(Material.values()));
+                    else if (cb.startsWith("-")) canbreak.remove(Material.matchMaterial(cb.substring(1)));
+                    else canbreak.add(Material.matchMaterial(cb));
+                });
+            canBreak.put(t, canbreak);
+            Set<Material> canplace = new HashSet<>();
+            if (OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".canplace"))
+                OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canplace").forEach(cb -> {
+                    if (cb.equals("*")) canplace.addAll(Arrays.asList(Material.values()));
+                    else if (cb.startsWith("-")) canplace.remove(Material.matchMaterial(cb.substring(1)));
+                    else canplace.add(Material.matchMaterial(cb));
+                });
+            canPlace.put(t, canplace);
+            Set<OMGDamageCause> canceldamage = new HashSet<>();
+            if (OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".canceldamage"))
+                OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".canceldamage").forEach(cb -> {
+                    if (cb.equals("*")) canceldamage.addAll(OMGDamageCause.values);
+                    else if (cb.startsWith("-"))
+                        canceldamage.remove(OMGDamageCause.valueOf(cb.substring(1).toUpperCase()));
+                    else canceldamage.add(OMGDamageCause.valueOf(cb.toUpperCase()));
+                });
+            cancelDamage.put(t, canceldamage);
             effects.put(t, !OMGPI.g.loadedMap.mapfig.contains("areas." + id + "." + t + ".effects") ? new ArrayList<>() : OMGPI.g.loadedMap.mapfig.getStringList("areas." + id + "." + t + ".effects").stream().map(m -> {
                 NBTParser nbt = new NBTParser(m);
                 return new PotionEffect(PotionEffectType.getByName(nbt.getString("id")), nbt.getInt("ticks"), nbt.getByte("level"), true, true);

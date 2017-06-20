@@ -83,7 +83,7 @@ public abstract class OMGDamageCause {
     };
     public static OMGDamageCause POISON = new OMGDamageCause("poison", EntityDamageEvent.DamageCause.POISON) {
         public String getDeathMessage(OMGPlayer damaged) {
-            return rDMBLD(damaged);
+            return rDMBLD(damaged, " was death-poisoned");
         }
     };
     public static OMGDamageCause STARVE = new OMGDamageCause("starve", EntityDamageEvent.DamageCause.MAGIC) {
