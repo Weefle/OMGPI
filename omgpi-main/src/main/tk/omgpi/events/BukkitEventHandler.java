@@ -200,7 +200,7 @@ public class BukkitEventHandler implements Listener {
 
     @EventHandler
     public void event(EntityExplodeEvent e) {
-        e.blockList().removeIf(b -> Area.registeredAreas.values().stream().anyMatch(a -> a.isInside(b.getLocation())) && Area.registeredAreas.values().stream().filter(a -> a.isInside(b.getLocation())).noneMatch(a -> a.allowExplosionDamage));
+        e.blockList().removeIf(b -> Area.registeredAreas.values().stream().anyMatch(a -> a.isInside(b.getLocation())) && Area.registeredAreas.values().stream().filter(a -> a.isInside(b.getLocation())).noneMatch(a -> a.canExplode.contains(b.getType())));
         if (g.state == GameState.INGAME && g.settings.isLootingOn)
             e.blockList().removeIf(b -> {
                 if (b.getType() == Material.CHEST) {

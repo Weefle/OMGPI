@@ -55,7 +55,7 @@ public class ReflectionUtils {
      * @param name Class name
      * @return First matching class
      */
-    public static Class getClazz(OMGList<String> lib, String name) {
+    public static Class<?> getClazz(OMGList<String> lib, String name) {
         try {
             return Class.forName(lib.omgstream().filter(cn -> cn.endsWith("." + name)).findFirst().orElse(null));
         } catch (ClassNotFoundException e) {

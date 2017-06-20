@@ -254,7 +254,7 @@ public class OMGPlayer extends Hashdatable {
      * Play effect of player getting damaged for all players.
      */
     @SuppressWarnings("all")
-    public void play_damageEffect() throws NoSuchMethodException {
+    public void play_damageEffect() {
         Class craftPlayer = ReflectionUtils.getClazz(ReflectionUtils.cbclasses, "CraftPlayer");
         Class entityPlayer = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "EntityPlayer");
         Class playerConnection = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "PlayerConnection");
