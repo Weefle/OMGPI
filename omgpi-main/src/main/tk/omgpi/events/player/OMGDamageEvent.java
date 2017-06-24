@@ -11,7 +11,6 @@ public class OMGDamageEvent extends OMGEvent implements Cancellable {
     public boolean cancel;
     public OMGPlayer damaged;
     public Entity damager;
-    public OMGDamageCause cause;
     public OMGDamageCause reason;
     public float damage;
 
@@ -46,11 +45,11 @@ public class OMGDamageEvent extends OMGEvent implements Cancellable {
 
     /**
      * Check if player becomes dead after event.
-     * Equivalent to damaged.bukkit.getHealth() - ((EntityDamageEvent) bukkit).getFinalDamage() &lt;= 0 || cause == OMGDamageCause.VOID.
+     * Equivalent to damaged.bukkit.getHealth() - ((EntityDamageEvent) bukkit).getFinalDamage() &lt;= 0 || reason == OMGDamageCause.VOID.
      *
      * @return True if player is dead, false otherwise.
      */
     public boolean isDead() {
-        return damaged.bukkit.getHealth() - ((EntityDamageEvent) bukkit).getFinalDamage() <= 0 || cause == OMGDamageCause.VOID;
+        return damaged.bukkit.getHealth() - ((EntityDamageEvent) bukkit).getFinalDamage() <= 0 || reason == OMGDamageCause.VOID;
     }
 }

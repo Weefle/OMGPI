@@ -89,7 +89,7 @@ public class OMGMap {
     @SuppressWarnings("ConstantConditions")
     public static List<String> getAllMaps() {
         List<String> ss = new LinkedList<>();
-        if (OMGPI.g.mapsDirectory.listFiles().length != 0)
+        if (OMGPI.g.mapsDirectory.listFiles() != null && OMGPI.g.mapsDirectory.listFiles().length != 0)
             ss = Arrays.stream(OMGPI.g.mapsDirectory.listFiles()).map(File::getName).collect(Collectors.toList());
         return ss;
     }

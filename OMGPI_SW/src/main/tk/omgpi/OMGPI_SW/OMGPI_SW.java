@@ -60,7 +60,7 @@ public class OMGPI_SW extends Game {
     public void event_player_death(OMGDeathEvent e) {
         e.damaged.dropItems();
         e.damaged.setTeam(spectatorTeam);
-        if (e.damageEvent.cause == OMGDamageCause.VOID)
+        if (e.damageEvent.reason == OMGDamageCause.VOID)
             e.damaged.bukkit.teleport(e.damaged.bukkit.getWorld().getSpawnLocation());
         e.sendDeathMessage();
         e.damaged.played = false;

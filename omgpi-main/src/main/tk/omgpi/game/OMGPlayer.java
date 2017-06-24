@@ -140,7 +140,12 @@ public class OMGPlayer extends Hashdatable {
             Object nmsPlayer = craftPlayer.getDeclaredMethod("getHandle").invoke(craftPlayer.cast(bukkit));
             Object conn = entityPlayer.getDeclaredField("playerConnection").get(nmsPlayer);
             Method sendPacket = playerConnection.getDeclaredMethod("sendPacket", ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "Packet"));
-            sendPacket.invoke(conn, packet.getConstructor(iChatBaseComponent, byte.class).newInstance(chatSerializer.getDeclaredMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.GOLD + (actionbar == null ? "" : actionbar.replaceAll("\"", "\\\\\"")) + "\"}"), (byte) 2));
+            try {
+                sendPacket.invoke(conn, packet.getConstructor(iChatBaseComponent, byte.class).newInstance(chatSerializer.getDeclaredMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.GOLD + (actionbar == null ? "" : actionbar.replaceAll("\"", "\\\\\"")) + "\"}"), (byte) 2));
+            } catch (NoSuchMethodException e) {
+                Class chatMessageType = ReflectionUtils.getClazz(ReflectionUtils.nmsclasses, "ChatMessageType");
+                sendPacket.invoke(conn, packet.getConstructor(iChatBaseComponent, chatMessageType).newInstance(chatSerializer.getDeclaredMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.GOLD + (actionbar == null ? "" : actionbar.replaceAll("\"", "\\\\\"")) + "\"}"), chatMessageType.getDeclaredField("GAME_INFO").get(null)));
+            }
         } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException | InstantiationException | NoSuchMethodException e) {
             e.printStackTrace();
         }
