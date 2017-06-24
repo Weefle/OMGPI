@@ -135,6 +135,7 @@ public class Game extends JavaPlugin implements Listener {
         gamefig = new Gamefig();
         state = GameState.PRELOBBY;
         gamePreparer = new ClijmartTeamAsserter();
+        shootSources = new HashMap<>();
 
         mapsDirectory = new File(getDataFolder() + File.separator + "maps");
 
@@ -144,6 +145,7 @@ public class Game extends JavaPlugin implements Listener {
         OMGKit.dir = new File(getDataFolder() + File.separator + "kits");
         OMGKit def = new OMGKit("Default");
         def.setUnpresent("displayItem", "{id:stone,Count:1,tag:{display:{Name:\"Default\"}}}");
+        def.save();
         String[] kitarr = OMGKit.dir.list();
         List<String> kits = kitarr == null ? new ArrayList<>() : Arrays.asList(kitarr);
         kits.stream().filter(k -> k.endsWith(".kit") && OMGKit.kits.stream().noneMatch(k1 -> (k1 + ".kit").equalsIgnoreCase(k))).forEach(k -> new OMGKit(k.replaceAll("\\.kit", "")));

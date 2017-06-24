@@ -21,7 +21,6 @@ import tk.omgpi.utils.ObjectiveBuffer;
  */
 public class OMGPI_SW extends Game {
     public static int j = 0;
-    public static int pl = -1;
 
     public void onEnable() {
         name = "Skywars";
@@ -44,7 +43,6 @@ public class OMGPI_SW extends Game {
     public void game_checkForEnd() {
         bar_set();
         if (state == GameState.INGAME) {
-            if (pl == -1) pl = defaultTeam.size();
             ObjectiveBuffer players = ObjectiveBuffer.createPlayerBuffer();
             OMGPlayer.link.values().forEach(p -> players.loadInto(p.displayObjective));
             player_updateScoreboardTeams();
