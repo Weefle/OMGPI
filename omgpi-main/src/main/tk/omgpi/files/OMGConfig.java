@@ -72,7 +72,7 @@ public class OMGConfig extends YamlConfiguration {
      *
      * @param path Root path for keys and values. Separate compounds by dots. Keys do not contain root path in them.
      * @param value Key, Value, Key, Value...
-     * @return Array: Key, then boolean, true if each value was not present and hence set, nezt key...
+     * @return Array: Key, then boolean, true if each value was not present and hence set, next key...
      */
     public Object[] setUnpresent(String path, Object... value) {
         if (value.length % 2 == 1) throw new IllegalArgumentException("Amount of keys and values are unequal");
@@ -85,7 +85,7 @@ public class OMGConfig extends YamlConfiguration {
                 continue;
             }
             if (!contains(path + "." + key)) {
-                set(path, value);
+                set(path + "." + key, value[i]);
                 o[i] = true;
             } else o[i] = false;
         }

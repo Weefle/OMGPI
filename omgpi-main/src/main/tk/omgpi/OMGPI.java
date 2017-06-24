@@ -78,7 +78,10 @@ public class OMGPI extends JavaPlugin {
             new MySQL(mainfig.getString("mysql.hostname"), mainfig.getString("mysql.port"), mainfig.getString("mysql.database"), mainfig.getString("mysql.username"), mainfig.getString("mysql.password"));
         iLog("Loading games...");
         OMGList<String> games = new OMGList<>();
-        Collections.addAll(games, new File(getDataFolder() + File.separator + "games").list());
+        File gdir = new File(getDataFolder() + File.separator + "games");
+        if (!gdir.exists() && gdir.mkdir()) iLog("Created games folder.");
+        String[] files = gdir.list();
+        if (files != null && files.length > 0) Collections.addAll(games, files);
         iLog("Games folder: " + Strings.join(games, ", "));
         games.removeIf(s -> !s.endsWith(".jar"));
         if (games.isEmpty()) {
