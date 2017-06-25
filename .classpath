@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="OMGPI_SW/src/main"/>
 	<classpathentry kind="src" path="omgpi-main/src/main"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Weefle/Desktop/Spigot/spigot-1.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Weefle/Desktop/Spigot/spigot-1.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
