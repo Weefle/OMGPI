@@ -10,7 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import tk.omgpi.OMGPI;
 import tk.omgpi.files.OMGKit;
+import tk.omgpi.files.OMGMap;
 import tk.omgpi.utils.NBTParser;
+import tk.omgpi.utils.OMGList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +47,7 @@ public class Inventories {
         teams = Bukkit.createInventory(null, OMGTeam.registeredTeams.size() / 9 + 9, "Teams");
         kits = Bukkit.createInventory(null, OMGKit.kits.size() / 9 + 9, "Kits");
         gameShop = Bukkit.createInventory(null, OMGPI.g.gamefig.getInt("gameShopSize", 54), "Shop");
-        
+
         int s = (OMGPI.g.settings.allowKits ? 1 : 0) + (OMGPI.g.settings.allowHotbarEdit ? 1 : 0);
         {
             ItemStack is = new ItemStack(Material.DIAMOND_HELMET, 1);
@@ -88,18 +90,22 @@ public class Inventories {
             OMGTeam t = OMGTeam.registeredTeams.get(i);
             teams.setItem(i, new NBTParser("{id:wool,Count:1,Damage:" + woolOf(ChatColor.getByChar(t.prefix.charAt(1))) + ",tag:{teamid:" + t + ",display:{Name:\"" + t.displayName + "\"}}}").toItem());
         }
-        
+
         OMGKit.kits.forEach(kit -> {
             NBTParser nbt = new NBTParser(kit.getString("displayItem"));
             nbt.setString("tag.kitid", kit.name);
             kits.addItem(nbt.toItem());
         });
 
-        if (OMGPI.g.voteSystem.votes.keySet().size() > 1) OMGPI.g.voteSystem.votes.keySet().forEach(m -> options.setItem(20 + OMGPI.g.voteSystem.votes.keySet().lastIndexOf(m), new ItemStack(Material.PAPER, OMGPI.g.voteSystem.votes.keySet().lastIndexOf(m)) {{
-            ItemMeta im = getItemMeta();
-            im.setDisplayName(ChatColor.WHITE + "Vote for " + m);
-            setItemMeta(im);
-        }}));
+        OMGList<OMGMap> maps = OMGPI.g.voteSystem.votes.keySet();
+        if (maps.size() > 1) for (int i = 0; i < maps.size(); i++) {
+            int finalI = i;
+            options.setItem(20 + i, new ItemStack(Material.PAPER, i + 1) {{
+                ItemMeta im = getItemMeta();
+                im.setDisplayName(ChatColor.WHITE + "Vote for " + maps.get(finalI));
+                setItemMeta(im);
+            }});
+        }
     }
     
     /**

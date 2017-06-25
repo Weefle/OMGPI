@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * A map
@@ -78,7 +77,7 @@ public class OMGMap {
         List<String> ss = getAllMaps().stream().filter(m -> !m.startsWith(".")).collect(Collectors.toList());
         Collections.shuffle(ss);
         if (ss.size() <= 0) return getAllMaps();
-        return IntStream.range(0, Math.min(5, ss.size())).mapToObj(ss::get).collect(Collectors.toList());
+        return ss.stream().limit(5).collect(Collectors.toList());
     }
 
     /**

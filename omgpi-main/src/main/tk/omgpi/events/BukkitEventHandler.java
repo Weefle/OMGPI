@@ -241,15 +241,15 @@ public class BukkitEventHandler implements Listener {
                 //Reset custom name
                 if (ReflectionUtils.intVer() < 11) {
                     try {
-                        Class craftBlockState = ReflectionUtils.getClazz(cbclasses, "CraftBlockState");
-                        Class tileEntityChest = ReflectionUtils.getClazz(nmsclasses, "TileEntityChest");
+                        Class<?> craftBlockState = ReflectionUtils.getClazz(cbclasses, "CraftBlockState");
+                        Class<?> tileEntityChest = ReflectionUtils.getClazz(nmsclasses, "TileEntityChest");
                         tileEntityChest.getDeclaredMethod("a", String.class).invoke(craftBlockState.getDeclaredMethod("getTileEntity").invoke(c), (String) null);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 } else {
                     try {
-                        Class craftLootable = ReflectionUtils.getClazz(cbclasses, "CraftLootable");
+                        Class<?> craftLootable = ReflectionUtils.getClazz(cbclasses, "CraftLootable");
                         craftLootable.getDeclaredMethod("setCustomName", String.class).invoke(c, (String) null);
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -276,8 +276,9 @@ public class BukkitEventHandler implements Listener {
                     Inventories.openFakeInv(Inventories.kits, get((Player) e.getWhoClicked()));
                 if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Hotbar"))
                     get((Player) e.getWhoClicked()).hotbarEdit();
-                if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Vote"))
-                    g.voteSystem.vote(get((Player) e.getWhoClicked()), e.getCurrentItem().getItemMeta().getDisplayName().replaceAll(ChatColor.WHITE + "Vote for ", ""));
+                if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Vote") && g.voteSystem.vote(get((Player) e.getWhoClicked()), e.getCurrentItem().getItemMeta().getDisplayName().replaceAll(ChatColor.WHITE + "Vote for ", "")))
+                    e.getWhoClicked().sendMessage(ChatColor.DARK_AQUA + "Voted for " + e.getCurrentItem().getItemMeta().getDisplayName().replaceAll(ChatColor.WHITE + "Vote for ", ""));
+
                 e.setCancelled(true);
             } else if (e.getClickedInventory().getTitle().equals(Inventories.teams.getTitle())) {
                 OMGTeam.registeredTeams.stream().filter(t -> t.id.equals(NBTParser.getTagCompound(e.getCurrentItem()).getString("teamid"))).findFirst().ifPresent(t -> g.player_request_team(get((Player) e.getWhoClicked()), t));

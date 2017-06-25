@@ -43,7 +43,7 @@ public class GameWorld {
             try {
                 FileUtils.deleteDirectory(new File(Bukkit.getWorldContainer() + File.separator + "gameworld"));
             } catch (IOException e) {
-                e.printStackTrace();
+                if (!e.getMessage().contains("Unable to delete")) e.printStackTrace();
             }
         }
     }
@@ -52,7 +52,7 @@ public class GameWorld {
      * Load world.
      */
     public void load() {
-        bukkit = Bukkit.createWorld(gen);
+        bukkit = gen.createWorld();
         bukkit.setPVP(true);
         bukkit.setDifficulty(Difficulty.NORMAL);
         bukkit.setGameRuleValue("doDaylightCycle", "false");

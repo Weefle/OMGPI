@@ -355,7 +355,7 @@ public class Game extends JavaPlugin implements Listener {
     public String game_winMessage() {
         if (OMGTeam.anyElseRegistered()) {
             Optional<OMGTeam> o = OMGTeam.getFiltered(t -> t != defaultTeam && t != spectatorTeam && t.state == OMGTeam.TeamState.WON).stream().findFirst();
-            return o.isPresent() ? o.get().displayName + " won!" : "Nobody won!";
+            return o.map(omgTeam -> omgTeam.displayName + " won!").orElse("Nobody won!");
         }
         return (spectatorTeam.unpresent().size() < 1 ? "Nobody" : spectatorTeam.unpresent().get(0).bukkit.getName()) + " won!";
     }
