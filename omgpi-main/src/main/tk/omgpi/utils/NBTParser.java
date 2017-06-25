@@ -594,4 +594,35 @@ public class NBTParser {
     public float getFloat(String key) {
         return getFloat(nbtTagCompound, key);
     }
+
+
+    /**
+     * Check if key is present in given tag
+     *
+     * @param tag Tag to get value from
+     * @param key Key to get value from, separate compounds by dots
+     * @return True if key is present, false otherwise
+     */
+    public static boolean hasKey(Object tag, String key) {
+        Class nbtTagCompound = getClazz(nmsclasses, "NBTTagCompound");
+        try {
+            if (key.contains(".")) {
+                String subkey = key.split("\\.")[0];
+                return hasKey(nbtTagCompound.getDeclaredMethod("getCompound", String.class).invoke(tag, subkey), key.substring(key.indexOf('.') + 1));
+            } else return (boolean) nbtTagCompound.getDeclaredMethod("hasKey", String.class).invoke(tag, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Check if key is present in NBTParser's tag
+     *
+     * @param key Key to get value from, separate compounds by dots
+     * @return True if key is present, false otherwise
+     */
+    public boolean hasKey(String key) {
+        return hasKey(nbtTagCompound, key);
+    }
 }

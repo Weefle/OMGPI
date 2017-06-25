@@ -12,6 +12,7 @@ import tk.omgpi.OMGPI;
 import tk.omgpi.files.OMGKit;
 import tk.omgpi.utils.NBTParser;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class Inventories {
         
         OMGKit.kits.forEach(kit -> {
             NBTParser nbt = new NBTParser(kit.getString("displayItem"));
-            nbt.setString("tag.kitid", kit.getName());
+            nbt.setString("tag.kitid", kit.name);
             kits.addItem(nbt.toItem());
         });
 
@@ -174,8 +175,16 @@ public class Inventories {
                 ItemMeta im = e.getItemMeta();
                 im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                 im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                if ((NBTParser.getTagCompound(e).getString("kitid") != null && NBTParser.getTagCompound(e).getString("kitid").equals(p.kit.getName())) || (NBTParser.getTagCompound(e).getString("teamid") != null && NBTParser.getTagCompound(e).getString("teamid").equals(p.requestedTeam.id)))
+                if ((NBTParser.getTagCompound(e).hasKey("kitid") && NBTParser.getTagCompound(e).getString("kitid").equals(p.kit.name)) || (NBTParser.getTagCompound(e).hasKey("teamid") && NBTParser.getTagCompound(e).getString("teamid").equals(p.requestedTeam.id)))
                     im.addEnchant(Enchantment.DURABILITY, 1, true);
+                if (NBTParser.getTagCompound(e).hasKey("kitid")) {
+                    ItemStack finalE = e;
+                    OMGKit.kits.stream().filter(k -> k.getName().equals(NBTParser.getTagCompound(finalE).getString("kitid"))).forEach(k -> {
+                        List<String> ss = im.hasLore() ? im.getLore() : new ArrayList<>();
+                        ss.add(ChatColor.GREEN + "Can use: " + (OMGPI.g.player_hasKit(p, k) ? (ChatColor.GREEN + "YES") : (ChatColor.RED + "NO")));
+                        im.setLore(ss);
+                    });
+                }
                 e.setItemMeta(im);
                 fake.setItem(slot, e);
             }

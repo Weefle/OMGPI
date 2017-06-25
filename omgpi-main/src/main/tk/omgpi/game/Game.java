@@ -579,9 +579,7 @@ public class Game extends JavaPlugin implements Listener {
         if (kit.name.equals("Default") || player_hasKit(p, kit)) {
             p.setKit(kit, true);
             p.bukkit.sendMessage(ChatColor.GREEN + "Your kit has been set to " + kit + ChatColor.GREEN + ".");
-        } else {
-            p.bukkit.sendMessage(ChatColor.GREEN + "Get the kit in Game Rolls!");
-        }
+        } else p.bukkit.sendMessage(ChatColor.GREEN + "Get the kit in Game Rolls!");
     }
 
     /**
