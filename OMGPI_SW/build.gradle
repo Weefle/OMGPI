@@ -21,6 +21,6 @@ repositories {
 }
 
 dependencies {
-    compile files('D:/BuildTools/spigot-1.12.jar')
-    compile files('D:/IdeaProjects/OMGPI/omgpi-main/')
+    compile files('C:/Users/Weefle/Desktop/Spigot/spigot-1.12.jar')
+    compile files('C:/Users/Weefle/git/OMGPI/omgpi-main/build/libs/omgpi-1.1a.jar')
 }
