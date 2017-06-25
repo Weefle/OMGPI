@@ -1,5 +1,4 @@
 group 'tk.omgpi'
-version '1.0'
 
 apply plugin: 'java'
 
@@ -21,7 +20,5 @@ repositories {
 }
 
 dependencies {
-    //compile files('D:/BuildTools/spigot-1.10.jar') //1.10
-    //compile files('D:/BuildTools/spigot-1.11.jar') //1.11
-    compile files('C:/Users/Weefle/Desktop/Spigot/spigot-1.12.jar') //1.12
+    compile files('C:/Users/Weefle/Desktop/Spigot/spigot-1.12.jar')
 }
