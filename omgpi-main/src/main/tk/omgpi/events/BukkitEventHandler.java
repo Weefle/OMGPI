@@ -263,7 +263,7 @@ public class BukkitEventHandler implements Listener {
 
     @EventHandler
     public void event(InventoryClickEvent e) {
-        if (e.getCurrentItem() == null) return;
+        if (e.getCurrentItem() == null){ return; }
         if (g.state == GameState.INGAME && e.getInventory().getType() == InventoryType.ANVIL && e.getCurrentItem() != null && e.getCurrentItem().hasItemMeta() && e.getCurrentItem().getItemMeta().hasDisplayName() && OMGLoot.loots.stream().anyMatch(l -> l.name.equals(e.getCurrentItem().getItemMeta().getDisplayName()))) {
             e.setCancelled(true);
             return;

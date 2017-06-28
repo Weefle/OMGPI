@@ -100,7 +100,7 @@ public class Inventories {
         OMGList<OMGMap> maps = OMGPI.g.voteSystem.votes.keySet();
         if (maps.size() > 1) for (int i = 0; i < maps.size(); i++) {
             int finalI = i;
-            options.setItem(20 + i, new ItemStack(Material.PAPER, i + 1) {{
+            options.setItem(20 + i, new ItemStack(Material.PAPER, 1) {{
                 ItemMeta im = getItemMeta();
                 im.setDisplayName(ChatColor.WHITE + "Vote for " + maps.get(finalI));
                 setItemMeta(im);
